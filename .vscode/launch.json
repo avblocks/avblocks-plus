@@ -1,0 +1,41 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "dec_aac_adts_file",
+            "type": "cppdbg",
+            "request": "launch",
+            // see: https://code.visualstudio.com/docs/cpp/config-clang-mac
+            "osx": {
+                "program": "${workspaceFolder}/bin/x64/dec_aac_adts_file",
+                "MIMode": "lldb",
+            },
+            // see: https://code.visualstudio.com/docs/cpp/config-linux
+            "linux": {
+                "program": "${workspaceFolder}/bin/x64/dec_aac_adts_file",
+                "MIMode": "gdb",
+                "setupCommands": [
+                    {
+                        "description": "Enable pretty-printing for gdb",
+                        "text": "-enable-pretty-printing",
+                        "ignoreFailures": true
+                    }
+                ],
+            },
+           // see: https://code.visualstudio.com/docs/cpp/config-msvc
+           "windows": {
+                "type": "cppvsdbg",
+                "program": "${workspaceFolder}/bin/x64/dec_aac_adts_file.exe",
+            },
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/bin/x64",
+            "environment": [],
+            "externalConsole": false,
+            "preLaunchTask": "Build All - Debug x64 - Demo"
+        }
+    ]
+}

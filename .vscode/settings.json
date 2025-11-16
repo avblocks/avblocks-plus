@@ -1,0 +1,90 @@
+{
+    "cmake.configureOnOpen": true,
+    "cmake.preferredGenerators": [
+        "Ninja"
+    ],
+    "cmake.buildTask": true,
+    "cmake.sourceDirectory": "${workspaceFolder}",
+    "cmake.buildDirectory": "${workspaceFolder}/build/${variant:buildType}_${variant:platform}",
+    "files.associations": {
+        "*.json": "jsonc",
+        "iostream": "cpp",
+        "filesystem": "cpp",
+        "__functional_base": "cpp",
+        "array": "cpp",
+        "istream": "cpp",
+        "locale": "cpp",
+        "memory": "cpp",
+        "thread": "cpp",
+        "tuple": "cpp",
+        "utility": "cpp",
+        "variant": "cpp",
+        "*.tcc": "cpp",
+        "ranges": "cpp",
+        "functional": "cpp",
+        "iomanip": "cpp",
+        "iosfwd": "cpp",
+        "sstream": "cpp",
+        "map": "cpp",
+        "vector": "cpp",
+        "xstring": "cpp",
+        "fstream": "cpp",
+        "string": "cpp",
+        "system_error": "cpp",
+        "xlocale": "cpp",
+        "__bit_reference": "cpp",
+        "__locale": "cpp",
+        "__node_handle": "cpp",
+        "__split_buffer": "cpp",
+        "__tree": "cpp",
+        "__verbose_abort": "cpp",
+        "bitset": "cpp",
+        "cctype": "cpp",
+        "clocale": "cpp",
+        "cmath": "cpp",
+        "cstdarg": "cpp",
+        "cstddef": "cpp",
+        "cstdint": "cpp",
+        "cstdio": "cpp",
+        "cstdlib": "cpp",
+        "cstring": "cpp",
+        "ctime": "cpp",
+        "cwchar": "cpp",
+        "execution": "cpp",
+        "initializer_list": "cpp",
+        "ios": "cpp",
+        "limits": "cpp",
+        "list": "cpp",
+        "mutex": "cpp",
+        "new": "cpp",
+        "print": "cpp",
+        "stdexcept": "cpp",
+        "streambuf": "cpp",
+        "string_view": "cpp",
+        "typeinfo": "cpp",
+        "algorithm": "cpp"
+    },
+    "markdown.preview.fontSize": 12,
+    "editor.tokenColorCustomizations": {
+        "textMateRules": [
+            {
+                "scope": "googletest.failed",
+                "settings": {
+                    "foreground": "#f00"
+                }
+            },
+            {
+                "scope": "googletest.passed",
+                "settings": {
+                    "foreground": "#0f0"
+                }
+            },
+            {
+                "scope": "googletest.run",
+                "settings": {
+                    "foreground": "#0f0"
+                }
+            }
+        ]
+    },
+}

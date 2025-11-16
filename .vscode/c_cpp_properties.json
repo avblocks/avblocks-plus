@@ -1,0 +1,48 @@
+{
+    "configurations": [
+        {
+            "name": "Darwin",
+            "includePath": [
+                "${workspaceFolder}/include/**",    
+                "${workspaceFolder}/sdk/include/**"
+            ],
+            "defines": [],
+            "macFrameworkPath": [
+                "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"
+            ],
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "clang-x64",
+            "configurationProvider": "ms-vscode.cmake-tools"
+        },
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/include/**",
+                "${workspaceFolder}/sdk/include/**"
+            ],
+            "defines": [],
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "compilerPath": "/usr/bin/gcc",
+            "intelliSenseMode": "linux-gcc-x64",
+            "configurationProvider": "ms-vscode.cmake-tools"
+        },
+        {
+            "name": "Windows",
+            "includePath": [
+                "${workspaceFolder}/include/**",
+                "${workspaceFolder}/sdk/include/**"
+            ],
+            "defines": [],
+            "compilerPath": "${env:VCToolsInstallDir}/bin/Hostx64/x64/cl.exe",
+            "windowsSdkVersion": "10.0.17763.0",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "msvc-x64",
+            "configurationProvider": "vector-of-bool.cmake-tools"
+        }        
+    ],
+    "version": 4
+}

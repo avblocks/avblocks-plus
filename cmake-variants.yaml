@@ -1,0 +1,38 @@
+buildType:
+  default: debug
+  choices:
+    debug:
+      short: debug
+      long: Build with debug information
+      buildType: debug
+    release:
+      short: release
+      long: Build without debug information
+      buildType: release
+
+platform:
+  default: x64
+  choices:
+    x64:
+      short: x64
+      long: Create 64-bit binaries
+      settings:
+        PLATFORM: x64
+    x86:
+      short: x86
+      long: Create 32-bit binaries
+      settings:
+        PLATFORM: x86
+    demo_x64:
+      short: demo_x64
+      long: Create 64-bit libraries / DLLs
+      settings:
+        PLATFORM: x64
+        DEMO: YES
+    demo_x86:
+      short: demo_x86
+      long: Create 32-bit libraries / DLLs
+      settings:
+        PLATFORM: x86
+        DEMO: YES
+

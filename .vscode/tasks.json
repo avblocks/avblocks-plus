@@ -1,0 +1,146 @@
+// See https://go.microsoft.com/fwlink/?LinkId=733558
+// for the documentation about the tasks.json format
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build All - Debug x64",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceRoot}/build/debug_x64"
+            },
+            "osx": {            
+                "command": "cmake -G 'Ninja' -DCMAKE_BUILD_TYPE=debug -DPLATFORM=x64 ../.. && ninja"
+            },
+            "linux": {            
+                "command": "cmake -G 'Ninja' -DCMAKE_BUILD_TYPE=debug -DPLATFORM=x64 ../.. && ninja"
+            },
+            "windows": {            
+                "command": "cmake -G 'Ninja' -DCMAKE_BUILD_TYPE=debug -DPLATFORM=x64 ../.. ; ninja"
+            },
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "absolute",
+                ],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
+        },
+        {
+            "label": "Build All - Debug x64 - Demo",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceRoot}/build/debug_demo_x64"
+            },
+            "osx": {            
+                "command": "cmake -G 'Ninja' -DCMAKE_BUILD_TYPE=debug -DPLATFORM=x64 -DDEMO=YES ../.. && ninja"
+            },
+            "linux": {            
+                "command": "cmake -G 'Ninja' -DCMAKE_BUILD_TYPE=debug -DPLATFORM=x64 -DDEMO=YES ../.. && ninja"
+            },
+            "windows": {
+                "command": "cmake -G 'Ninja' -DCMAKE_BUILD_TYPE=debug -DPLATFORM=x64 -DDEMO=YES ../.. ; ninja"
+            },
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceFolder}/buildType/platform"
+                ],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
+        },        
+        {
+            "label": "Build All - Release x64",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceRoot}/build/release_x64"
+            },
+            "osx": {            
+                "command": "cmake -G 'Ninja' -DCMAKE_BUILD_TYPE=release -DPLATFORM=x64 ../.. && ninja"
+            },
+            "linux": {            
+                "command": "cmake -G 'Ninja' -DCMAKE_BUILD_TYPE=release -DPLATFORM=x64 ../.. && ninja"
+            },
+            "windows": {            
+                "command": "cmake -G 'Ninja' -DCMAKE_BUILD_TYPE=release -DPLATFORM=x64 ../.. ; ninja"
+            },
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceRoot}"
+                ],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
+        },
+        {
+            "label": "Build All - Release x64 - Demo",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceRoot}/build/release_demo_x64"
+            },
+            "osx": {            
+                "command": "cmake -G 'Ninja' -DCMAKE_BUILD_TYPE=release -DPLATFORM=x64 -DDEMO=YES ../.. && ninja"
+            },
+            "linux": {            
+                "command": "cmake -G 'Ninja' -DCMAKE_BUILD_TYPE=release -DPLATFORM=x64 -DDEMO=YES ../.. && ninja"
+            },
+            "windows": {
+                "command": "cmake -G 'Ninja' -DCMAKE_BUILD_TYPE=release -DPLATFORM=x64 -DDEMO=YES ../.. ; ninja"
+            },
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceRoot}"
+                ],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
+        },                
+    ]
+}
