@@ -35,4 +35,5 @@ inline void deleteFile(const char* file)
 }
 
 std::string getExeDir();
+bool makeDir(const std::string& dir);
 

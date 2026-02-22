@@ -26,10 +26,12 @@ bool decode(Options &opt)
                     .streamType(StreamType::LPCM)
                     .addPin(
                         TMediaPin()
-                            .audioStreamType(StreamType::LPCM)
-                            .channels(2)
-                            .sampleRate(48000)
-                            .bitsPerSample(16)
+                            .streamInfo(TAudioStreamInfo()
+                                .streamType(StreamType::LPCM)
+                                .channels(2)
+                                .sampleRate(48000)
+                                .bitsPerSample(16)
+                            )
                     )
             )
             .open();
@@ -42,10 +44,12 @@ bool decode(Options &opt)
                     .streamType(StreamType::LPCM)
                     .addPin(
                         TMediaPin()
-                            .audioStreamType(StreamType::LPCM)
-                            .channels(2)
-                            .sampleRate(48000)
-                            .bitsPerSample(16)
+                            .streamInfo(TAudioStreamInfo()
+                                .streamType(StreamType::LPCM)
+                                .channels(2)
+                                .sampleRate(48000)
+                                .bitsPerSample(16)
+                            )
                     )
             )
             .addOutput(
@@ -54,10 +58,12 @@ bool decode(Options &opt)
                     .streamType(StreamType::WAVE)
                     .addPin(
                         TMediaPin()
-                            .audioStreamType(StreamType::LPCM)
-                            .channels(2)
-                            .sampleRate(48000)
-                            .bitsPerSample(16)
+                            .streamInfo(TAudioStreamInfo()
+                                .streamType(StreamType::LPCM)
+                                .channels(2)
+                                .sampleRate(48000)
+                                .bitsPerSample(16)
+                            )
                     )
             )
             .open();
@@ -79,9 +85,9 @@ bool decode(Options &opt)
             }
 
             // No more PCM data from decoder
-            const auto* error = decoder.error();
-            if (error->facility() == primo::error::ErrorFacility::Codec &&
-                error->code() == CodecError::EOS) {
+            const auto error = decoder.error();
+            if (error.facility() == primo::error::ErrorFacility::Codec &&
+                error.code()     == primo::codecs::CodecError::EOS) {
                 // Push null sample to signal EOS to WAV writer
                 TMediaSample nullSample;
                 wavWriter.push(0, nullSample);
