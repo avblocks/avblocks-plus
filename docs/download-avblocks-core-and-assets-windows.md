@@ -14,7 +14,7 @@ In the script below, change the tag to the release that you need. For the availa
 
 ```powershell
 # select version and platform
-$tag='v3.2.0-demo.1'
+$tag='v3.4.0-demo.1'
 $platform='windows'
 
 # download
@@ -55,11 +55,11 @@ cd ./assets
 
 curl.exe `
   --location `
-  --output ./avblocks_assets_v3.zip `
-  https://github.com/avblocks/avblocks-assets/releases/download/v3/avblocks_assets_v3.zip
+  --output ./avblocks_assets_v5.zip `
+  https://github.com/avblocks/avblocks-assets/releases/download/v5/avblocks_assets_v5.zip
   
 # unzip
-expand-archive -Force -Path avblocks_assets_v3.zip -DestinationPath .
+expand-archive -Force -Path avblocks_assets_v5.zip -DestinationPath .
 
 cd ..
 ```
