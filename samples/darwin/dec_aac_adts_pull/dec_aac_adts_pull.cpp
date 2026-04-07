@@ -88,9 +88,8 @@ bool decode(Options &opt)
             const auto error = decoder.error();
             if (error.facility() == primo::error::ErrorFacility::Codec &&
                 error.code()     == primo::codecs::CodecError::EOS) {
-                // Push null sample to signal EOS to WAV writer
-                TMediaSample nullSample;
-                wavWriter.push(0, nullSample);
+                // Signal EOS to WAV writer
+                wavWriter.pushEos(0);
                 decoderEos = true;
                 continue;
             }

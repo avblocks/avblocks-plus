@@ -15,14 +15,15 @@ bool decode(const Options& opt)
         deleteFile(opt.outputFile.c_str());
         
         // Create input socket from file.
-        TMediaSocket inputSocket = TMediaSocket()
-                .file(opt.inputFile);
+        TMediaSocket inputSocket = TMediaSocket().file(opt.inputFile);
         
         // Create output socket with WAV format and LPCM audio
         TMediaSocket outputSocket = TMediaSocket()
-                .file(opt.outputFile)
-                .streamType(StreamType::WAVE)
-                .addPin(TMediaPin().streamInfo(TAudioStreamInfo().streamType(StreamType::LPCM)));
+            .file(opt.outputFile)
+            .streamType(StreamType::WAVE)
+            .addPin(TMediaPin()
+                .streamInfo(TAudioStreamInfo()
+                    .streamType(StreamType::LPCM)));
         
         // Create and run transcoder
         TTranscoder()

@@ -35,11 +35,11 @@ bool decode(Options& opt)
         s << opt.input_dir << "/au_" << setw(4) << setfill('0') << 0 << ".h264";
 
         TMediaInfo mediaInfo;
-        mediaInfo.input(0).file(s.str());
+        mediaInfo.inputs(0).file(s.str());
         mediaInfo.open();
 
         // Resolve output frame dimensions from detected stream info, or override from options
-        auto vsi = mediaInfo.output(0).pin(0).videoStreamInfo();
+        auto vsi = mediaInfo.outputs(0).pins(0).videoStreamInfo();
         int yuv_width  = opt.frame_size.width  > 0 ? opt.frame_size.width  : vsi.frameWidth();
         int yuv_height = opt.frame_size.height > 0 ? opt.frame_size.height : vsi.frameHeight();
 
