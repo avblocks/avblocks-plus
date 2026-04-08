@@ -7,6 +7,7 @@
 
 #include <string>
 #include <memory>
+#include <functional>
 #include <optional>
 #include <stdexcept>
 
@@ -749,6 +750,12 @@ public:
     /// Resets all fields to their defaults. Returns @c false if the object is immutable.
     bool reset() { return info_->reset() == TRUE; }
 
+    /// Returns a mutable deep copy. The cloned object is always mutable regardless
+    /// of whether the source was immutable.
+    Derived clone() const {
+        return Derived(primo::ref<RawT>(static_cast<RawT*>(info_->clone())));
+    }
+
     /// Returns the raw underlying pointer. For interop with the C API only.
     RawT* get() const { return info_.get(); }
 };
@@ -1163,6 +1170,11 @@ public:
         : socket_(primo::avblocks::Library::createMediaSocket(info.get())) {
     }
 
+    /// Creates a socket pre-configured with the named AVBlocks preset
+    /// (e.g. @c Preset::Video::Generic::MP4::Base_H264_AAC).
+    explicit TMediaSocketT(const char* preset)
+        : socket_(primo::avblocks::Library::createMediaSocket(preset)) {}
+
     // Delete copy operations
     TMediaSocketT(const TMediaSocketT&) = delete;
     TMediaSocketT& operator=(const TMediaSocketT&) = delete;
@@ -1180,6 +1192,18 @@ public:
     
     TMediaSocketT& file(const string_type& path) & {
         socket_->setFile(string_traits<CharT>::to_ustring(path));
+        return *this;
+    }
+
+    /// Clears the file path (pass @c nullptr).
+    TMediaSocketT&& file(std::nullptr_t) && {
+        socket_->setFile(nullptr);
+        return std::move(*this);
+    }
+
+    /// Clears the file path (pass @c nullptr).
+    TMediaSocketT& file(std::nullptr_t) & {
+        socket_->setFile(nullptr);
         return *this;
     }
     

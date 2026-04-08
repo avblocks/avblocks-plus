@@ -244,6 +244,44 @@ Encode a WAV file to MP3 file using `Transcoder::push`.
 
 See [enc_mp3_push](./enc_mp3_push) for details.
 
+### Preset
+
+#### enc_preset_file
+
+Encode a raw YUV video file to a variety of output formats using an AVBlocks preset.
+
+See [enc_preset_file](./enc_preset_file) for details.
+
+## Muxing
+
+#### mux_mp4_file
+
+Multiplex two single-stream MP4 files containing AAC (audio) and H.264 (video) streams into an MP4 (container) file.
+
+See [mux_mp4_file](./mux_mp4_file) for details.
+
+#### mux_webm_file
+
+Multiplex two single-stream WebM files containing Vorbis (audio) and VP8 (video) streams into a WebM (container) file.
+
+See [mux_webm_file](./mux_webm_file) for details.
+
+## Re-encoding
+
+#### re-encode
+
+Re-encode audio and video streams of an MP4 file.
+
+See [re-encode](./re-encode) for details.
+
+## Slideshow
+
+#### slideshow
+
+Create an MP4 slideshow from a sequence of images.
+
+See [slideshow](./slideshow) for details.
+
 ## Utility
 
 #### dump_avc_au

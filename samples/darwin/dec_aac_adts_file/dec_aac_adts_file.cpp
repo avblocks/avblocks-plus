@@ -1,6 +1,6 @@
 #include <primo/avblocks/avb++.h>
 
-#include <iostream>
+#include <print>
 
 #include "options.h"
 #include "util.h"
@@ -37,10 +37,10 @@ bool decode(const Options& opt)
         return true;
         
     } catch (const TAVBlocksException& ex) {
-        std::cerr << "AVBlocks error: " << ex.what() << std::endl;
+        std::println(stderr, "AVBlocks error: {}", ex.what());
         return false;
     } catch (const std::exception& ex) {
-        std::cerr << "Error: " << ex.what() << std::endl;
+        std::println(stderr, "Error: {}", ex.what());
         return false;
     }
 }
