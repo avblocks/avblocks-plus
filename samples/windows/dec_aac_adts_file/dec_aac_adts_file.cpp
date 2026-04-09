@@ -24,7 +24,9 @@ bool decode(const Options& opt)
         TMediaSocketW outputSocket = TMediaSocketW()
                 .file(opt.outputFile)
                 .streamType(StreamType::WAVE)
-                .addPin(TMediaPin().audioStreamType(StreamType::LPCM));
+                .addPin(TMediaPin()
+                    .streamInfo(TAudioStreamInfo()
+                        .streamType(StreamType::LPCM)));
         
         // Create and run transcoder
         TTranscoderW()

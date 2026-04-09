@@ -1165,8 +1165,8 @@ public:
     /// The created socket contains the file path and pins from the media info, ready to be
     /// added as a transcoder input. Member template so the body is instantiation-checked,
     /// allowing @c TMediaInfo to be defined after @c TMediaSocketT without a circular dependency.
-    template<typename TMediaInfoT>
-    explicit TMediaSocketT(const TMediaInfoT& info)
+    template<typename TMediaInfoArg>
+    explicit TMediaSocketT(const TMediaInfoArg& info)
         : socket_(primo::avblocks::Library::createMediaSocket(info.get())) {
     }
 
@@ -1350,23 +1350,24 @@ public:
     bool clear() { return list_ && list_->clear() == TRUE; }
 };
 
-class TMediaInfo {
+template<typename CharT = char>
+class TMediaInfoT {
     primo::ref<primo::avblocks::MediaInfo> info_;
 
 public:
-    TMediaInfo()
+    TMediaInfoT()
         : info_(primo::avblocks::Library::createMediaInfo()) {}
 
     // Delete copy operations
-    TMediaInfo(const TMediaInfo&) = delete;
-    TMediaInfo& operator=(const TMediaInfo&) = delete;
+    TMediaInfoT(const TMediaInfoT&) = delete;
+    TMediaInfoT& operator=(const TMediaInfoT&) = delete;
 
     // Enable move operations
-    TMediaInfo(TMediaInfo&&) = default;
-    TMediaInfo& operator=(TMediaInfo&&) = default;
+    TMediaInfoT(TMediaInfoT&&) = default;
+    TMediaInfoT& operator=(TMediaInfoT&&) = default;
 
     /// Opens the MediaInfo, throwing @c TAVBlocksException on failure.
-    TMediaInfo& open() {
+    TMediaInfoT& open() {
         if (!info_->open()) {
             throw TAVBlocksException("Failed to open MediaInfo", TErrorInfo(info_->error()));
         }
@@ -1401,20 +1402,24 @@ public:
     TMediaSocketList inputs() const { return TMediaSocketList(info_->inputs()); }
 
     /// Returns the input socket at @p index, wrapping the existing (non-owned) pointer.
-    TMediaSocket inputs(int32_t index) const {
-        return TMediaSocket(info_->inputs()->at(index));
+    TMediaSocketT<CharT> inputs(int32_t index) const {
+        return TMediaSocketT<CharT>(info_->inputs()->at(index));
     }
 
     /// Returns a non-owning view of the output socket list.
     TMediaSocketList outputs() const { return TMediaSocketList(info_->outputs()); }
 
     /// Returns the output socket at @p index, wrapping the existing (non-owned) pointer.
-    TMediaSocket outputs(int32_t index) const {
-        return TMediaSocket(info_->outputs()->at(index));
+    TMediaSocketT<CharT> outputs(int32_t index) const {
+        return TMediaSocketT<CharT>(info_->outputs()->at(index));
     }
 
     primo::avblocks::MediaInfo* get() const { return info_.get(); }
 };
+
+// Type aliases for convenience
+using TMediaInfo  = TMediaInfoT<char>;
+using TMediaInfoW = TMediaInfoT<wchar_t>;
 
 /**
  * Internal adapter that bridges @c std::function callbacks to the raw
@@ -1535,16 +1540,16 @@ public:
     TMediaSocketList inputs() const { return TMediaSocketList(transcoder_->inputs()); }
 
     /// Returns the input socket at @p index, wrapping the existing (non-owned) pointer.
-    TMediaSocket inputs(int32_t index) const {
-        return TMediaSocket(transcoder_->inputs()->at(index));
+    TMediaSocketT<CharT> inputs(int32_t index) const {
+        return TMediaSocketT<CharT>(transcoder_->inputs()->at(index));
     }
 
     /// Returns a non-owning view of the output socket list.
     TMediaSocketList outputs() const { return TMediaSocketList(transcoder_->outputs()); }
 
     /// Returns the output socket at @p index, wrapping the existing (non-owned) pointer.
-    TMediaSocket outputs(int32_t index) const {
-        return TMediaSocket(transcoder_->outputs()->at(index));
+    TMediaSocketT<CharT> outputs(int32_t index) const {
+        return TMediaSocketT<CharT>(transcoder_->outputs()->at(index));
     }
 
     TTranscoderT& open() {

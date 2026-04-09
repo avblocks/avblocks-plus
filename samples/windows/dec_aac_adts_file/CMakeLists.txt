@@ -31,7 +31,7 @@ if(OS STREQUAL "windows")
     set_property(TARGET ${target} PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
     # enable C++ 17 standard features
-    target_compile_features(${target} PRIVATE cxx_std_17)
+    target_compile_features(${target} PRIVATE cxx_std_23)
 
     # assume extern "C" functions do not throw. 
     # see: https://docs.microsoft.com/en-us/cpp/build/reference/eh-exception-handling-model?view=vs-2019
