@@ -79,14 +79,14 @@ popd
 ```powershell
 new-item -Force -ItemType Directory ./vs2022
 pushd ./vs2022
-cmake cmake -G "Visual Studio 17 2022" -A x64 -DPLATFORM=x64 ..
-popd  
+cmake -G "Visual Studio 17 2022" -A x64 -DPLATFORM=x64 ..
+popd
 ```
 
 Open the project in Visual Studio:
 
 ```powershell
-pushd ./vs2022 
+pushd ./vs2022
 start .\avblocks-plus.sln
 popd
 ```
