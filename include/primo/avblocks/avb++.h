@@ -1206,7 +1206,13 @@ public:
         socket_->setFile(nullptr);
         return *this;
     }
-    
+
+    /// Returns the file path as a UTF-8 @c std::string, or empty string if not set.
+    std::string file() const {
+        const char_t* f = socket_ ? socket_->file() : nullptr;
+        return f ? std::string(primo::ustring(f)) : std::string{};
+    }
+
     TMediaSocketT&& streamType(primo::codecs::StreamType::Enum type) && {
         socket_->setStreamType(type);
         return std::move(*this);
