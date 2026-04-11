@@ -21,6 +21,8 @@
 #include <sstream>
 #include <filesystem>
 
+#include "../shim/shim23.h"
+
 #include <primo/avblocks/avb.h>
 #include <primo/platform/reference++.h>
 #include <primo/platform/error_facility.h>

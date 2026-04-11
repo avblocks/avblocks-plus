@@ -24,7 +24,7 @@ endif()
 # Linux
 if(OS STREQUAL "linux") 
     # common compile options
-    target_compile_options(${target} PRIVATE -std=c++23 -MMD -MP -MF)
+    target_compile_options(${target} PRIVATE -std=c++20 -MMD -MP -MF)
 
     # x64 compile options
     if (PLATFORM STREQUAL "x64") 

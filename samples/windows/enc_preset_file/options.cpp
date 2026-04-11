@@ -51,48 +51,48 @@ const int avb_presets_len = sizeof(avb_presets) / sizeof(PresetDescriptor);
 
 ColorDescriptor color_formats[] = {
     
-    { ColorFormat::YV12,	"yv12",     "Planar Y, V, U (4:2:0) (note V,U order!)" },
-    { ColorFormat::NV12,	"nv12",     "Planar Y, merged U->V (4:2:0)" },
-    { ColorFormat::YUY2,	"yuy2",     "Composite Y->U->Y->V (4:2:2)" },
-    { ColorFormat::UYVY,	"uyvy",     "Composite U->Y->V->Y (4:2:2)" },
-    { ColorFormat::YUV411,	"yuv411",	"Planar Y, U, V (4:1:1)" },
-    { ColorFormat::YUV420,	"yuv420",	"Planar Y, U, V (4:2:0)" },
-    { ColorFormat::YUV422,	"yuv422",	"Planar Y, U, V (4:2:2)" },
-    { ColorFormat::YUV444,	"yuv444",	"Planar Y, U, V (4:4:4)" },
-    { ColorFormat::Y411,	"y411",     "Composite Y, U, V (4:1:1)" },
-    { ColorFormat::Y41P,	"y41p",     "Composite Y, U, V (4:1:1)" },
-    { ColorFormat::BGR32,	"bgr32",	"Composite B->G->R" },
-    { ColorFormat::BGRA32,	"bgra32",	"Composite B->G->R->A" },
-    { ColorFormat::BGR24,	"bgr24",	"Composite B->G->R" },
-    { ColorFormat::BGR565,	"bgr565",	"Composite B->G->R, 5 bit per B & R, 6 bit per G" },
-    { ColorFormat::BGR555,	"bgr555",	"Composite B->G->R->A, 5 bit per component, 1 bit per A" },
-    { ColorFormat::BGR444,	"bgr444",	"Composite B->G->R->A, 4 bit per component" },
-    { ColorFormat::GRAY,	"gray",     "Luminance component only" },
-    { ColorFormat::YUV420A,	"yuv420a",	"Planar Y, U, V, Alpha (4:2:0)" },
-    { ColorFormat::YUV422A,	"yuv422a",	"Planar Y, U, V, Alpha (4:2:2)" },
-    { ColorFormat::YUV444A,	"yuv444a",	"Planar Y, U, V, Alpha (4:4:4)" },
-    { ColorFormat::YVU9,	"yvu9",     "Planar Y, V, U, 9 bits per sample" },
+    { ColorFormat::YV12,	L"yv12",     L"Planar Y, V, U (4:2:0) (note V,U order!)" },
+    { ColorFormat::NV12,	L"nv12",     L"Planar Y, merged U->V (4:2:0)" },
+    { ColorFormat::YUY2,	L"yuy2",     L"Composite Y->U->Y->V (4:2:2)" },
+    { ColorFormat::UYVY,	L"uyvy",     L"Composite U->Y->V->Y (4:2:2)" },
+    { ColorFormat::YUV411,	L"yuv411",	L"Planar Y, U, V (4:1:1)" },
+    { ColorFormat::YUV420,	L"yuv420",	L"Planar Y, U, V (4:2:0)" },
+    { ColorFormat::YUV422,	L"yuv422",	L"Planar Y, U, V (4:2:2)" },
+    { ColorFormat::YUV444,	L"yuv444",	L"Planar Y, U, V (4:4:4)" },
+    { ColorFormat::Y411,	L"y411",     L"Composite Y, U, V (4:1:1)" },
+    { ColorFormat::Y41P,	L"y41p",     L"Composite Y, U, V (4:1:1)" },
+    { ColorFormat::BGR32,	L"bgr32",	L"Composite B->G->R" },
+    { ColorFormat::BGRA32,	L"bgra32",	L"Composite B->G->R->A" },
+    { ColorFormat::BGR24,	L"bgr24",	L"Composite B->G->R" },
+    { ColorFormat::BGR565,	L"bgr565",	L"Composite B->G->R, 5 bit per B & R, 6 bit per G" },
+    { ColorFormat::BGR555,	L"bgr555",	L"Composite B->G->R->A, 5 bit per component, 1 bit per A" },
+    { ColorFormat::BGR444,	L"bgr444",	L"Composite B->G->R->A, 4 bit per component" },
+    { ColorFormat::GRAY,	L"gray",     L"Luminance component only" },
+    { ColorFormat::YUV420A,	L"yuv420a",	L"Planar Y, U, V, Alpha (4:2:0)" },
+    { ColorFormat::YUV422A,	L"yuv422a",	L"Planar Y, U, V, Alpha (4:2:2)" },
+    { ColorFormat::YUV444A,	L"yuv444a",	L"Planar Y, U, V, Alpha (4:4:4)" },
+    { ColorFormat::YVU9,	L"yvu9",     L"Planar Y, V, U, 9 bits per sample" },
 };
 
 const int color_formats_len = sizeof(color_formats) / sizeof(ColorDescriptor);
 
-PresetDescriptor* getPresetByName(const char* presetName)
+PresetDescriptor* getPresetByName(const wchar_t* presetName)
 {
     for (int i = 0; i < avb_presets_len; ++i)
     {
         PresetDescriptor& preset = avb_presets[i];
-        if (0 == _stricmp(preset.name, presetName))
+        if (0 == _wcsicmp(toWide(preset.name).c_str(), presetName))
             return &preset;
     }
     return NULL;
 }
 
-ColorDescriptor* getColorByName(const char* colorName)
+ColorDescriptor* getColorByName(const wchar_t* colorName)
 {
     for (int i = 0; i < color_formats_len; ++i)
     {
         ColorDescriptor& color = color_formats[i];
-        if (0 == _stricmp(color.name, colorName))
+        if (0 == _wcsicmp(color.name, colorName))
             return &color;
     }
     return NULL;
@@ -129,7 +129,7 @@ void listColors()
     for (int i = 0; i < color_formats_len; ++i)
     {
         const ColorDescriptor& color = color_formats[i];
-        wcout << left << setw(20) << toWide(color.name) << toWide(color.description) << endl;
+        wcout << left << setw(20) << color.name << color.description << endl;
     }
 }
 
@@ -157,14 +157,14 @@ void setDefaultOptions(Options& opt)
     opt.yuv_frame.height = 144;
     opt.yuv_frame.width = 176;
     opt.yuv_color = *getColorById(primo::codecs::ColorFormat::YUV420);
-    opt.preset = *getPresetByName(Preset::Video::Generic::MP4::Base_H264_AAC);
+    opt.preset = *getPresetByName(toWide(Preset::Video::Generic::MP4::Base_H264_AAC).c_str());
 }
 
 bool validateOptions(Options& opt)
 {
     if (!opt.preset.name)
     {
-        opt.preset = *getPresetByName(Preset::Video::Generic::MP4::Base_H264_AAC);
+        opt.preset = *getPresetByName(toWide(Preset::Video::Generic::MP4::Base_H264_AAC).c_str());
     }
 
     // fix output: append file extension
@@ -208,7 +208,7 @@ ErrorCodes prepareOptions(Options& opt, int argc, wchar_t* argv[])
         setDefaultOptions(opt);
         std::wcout << L"Using defaults:\n";
         std::wcout << L" --input " << opt.yuv_file;
-        std::wcout << L" --color " << toWide(opt.yuv_color.name);
+        std::wcout << L" --color " << opt.yuv_color.name;
         std::wcout << L" --rate " << opt.yuv_fps;
         std::wcout << L" --frame " << opt.yuv_frame.width << L"x" << opt.yuv_frame.height;
         std::wcout << L" --output " << opt.output_file;
@@ -271,9 +271,8 @@ std::wistringstream& operator>>(std::wistringstream& in, ColorDescriptor& color)
 {
     std::wstring wname;
     in >> wname;
-    std::string name(wname.begin(), wname.end());
 
-    ColorDescriptor* colorDesc = getColorByName(name.c_str());
+    ColorDescriptor* colorDesc = getColorByName(wname.c_str());
     if (!colorDesc)
         throw primo::program_options::ParseFailure<wchar_t>(L"", wname, L"Parse error");
 
@@ -285,9 +284,8 @@ std::wistringstream& operator>>(std::wistringstream& in, PresetDescriptor& prese
 {
     std::wstring wname;
     in >> wname;
-    std::string presetName(wname.begin(), wname.end());
 
-    PresetDescriptor* presetDesc = getPresetByName(presetName.c_str());
+    PresetDescriptor* presetDesc = getPresetByName(wname.c_str());
     if (!presetDesc)
         throw primo::program_options::ParseFailure<wchar_t>(L"", wname, L"Parse error");
 

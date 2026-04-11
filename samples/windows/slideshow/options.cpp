@@ -49,12 +49,12 @@ void listPresets()
     }
 }
 
-PresetDescriptor* getPresetByName(const char* presetName)
+PresetDescriptor* getPresetByName(const wchar_t* presetName)
 {
     for (int i = 0; i < avb_presets_len; ++i)
     {
         PresetDescriptor* preset = &avb_presets[i];
-        if (0 == _stricmp(preset->name, presetName))
+        if (0 == _wcsicmp(toWide(preset->name).c_str(), presetName))
             return preset;
     }
     return NULL;
@@ -79,14 +79,14 @@ void setDefaultOptions(Options& opt)
     s << output.c_str() << L"/cube.mp4";
     opt.output_file = s.str();
 
-    opt.preset = *getPresetByName(Preset::Video::Generic::MP4::Base_H264_AAC);
+    opt.preset = *getPresetByName(toWide(Preset::Video::Generic::MP4::Base_H264_AAC).c_str());
 }
 
 bool validateOptions(Options& opt)
 {
     if (!opt.preset.name)
     {
-        opt.preset = *getPresetByName(Preset::Video::Generic::MP4::Base_H264_AAC);
+        opt.preset = *getPresetByName(toWide(Preset::Video::Generic::MP4::Base_H264_AAC).c_str());
     }
 
     // fix output: append file extension
@@ -170,9 +170,8 @@ std::wistringstream& operator>>(std::wistringstream& in, PresetDescriptor& prese
 {
     std::wstring wname;
     in >> wname;
-    std::string presetName(wname.begin(), wname.end());
 
-    PresetDescriptor* presetDesc = getPresetByName(presetName.c_str());
+    PresetDescriptor* presetDesc = getPresetByName(wname.c_str());
     if (!presetDesc)
         throw primo::program_options::ParseFailure<wchar_t>(L"", wname, L"Parse error");
 

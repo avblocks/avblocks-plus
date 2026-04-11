@@ -6,6 +6,7 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include "../shim/shim23.h"
 
 inline void printError(const char* action, const primo::avblocks::modern::TErrorInfo& e)
 {

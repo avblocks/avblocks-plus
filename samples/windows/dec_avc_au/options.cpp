@@ -10,28 +10,28 @@ using namespace primo::avblocks;
 using namespace primo::codecs;
 
 ColorDescriptor color_formats[] = {
-    { ColorFormat::YV12,   "yv12",   "Planar Y, V, U (4:2:0) (note V,U order!)" },
-    { ColorFormat::NV12,   "nv12",   "Planar Y, merged U->V (4:2:0)" },
-    { ColorFormat::YUY2,   "yuy2",   "Composite Y->U->Y->V (4:2:2)" },
-    { ColorFormat::UYVY,   "uyvy",   "Composite U->Y->V->Y (4:2:2)" },
-    { ColorFormat::YUV411, "yuv411", "Planar Y, U, V (4:1:1)" },
-    { ColorFormat::YUV420, "yuv420", "Planar Y, U, V (4:2:0)" },
-    { ColorFormat::YUV422, "yuv422", "Planar Y, U, V (4:2:2)" },
-    { ColorFormat::Y41P,   "y41p",   "Composite Y, U, V (4:1:1)" },
-    { ColorFormat::BGR32,  "bgr32",  "Composite B->G->R" },
-    { ColorFormat::BGRA32, "bgra32", "Composite B->G->R->A" },
-    { ColorFormat::BGR24,  "bgr24",  "Composite B->G->R" },
-    { ColorFormat::BGR565, "bgr565", "Composite B->G->R, 5/6/5 bits" },
-    { ColorFormat::BGR555, "bgr555", "Composite B->G->R->A, 5 bits each" },
-    { ColorFormat::BGR444, "bgr444", "Composite B->G->R->A, 4 bits each" },
+    { ColorFormat::YV12,   L"yv12",   L"Planar Y, V, U (4:2:0) (note V,U order!)" },
+    { ColorFormat::NV12,   L"nv12",   L"Planar Y, merged U->V (4:2:0)" },
+    { ColorFormat::YUY2,   L"yuy2",   L"Composite Y->U->Y->V (4:2:2)" },
+    { ColorFormat::UYVY,   L"uyvy",   L"Composite U->Y->V->Y (4:2:2)" },
+    { ColorFormat::YUV411, L"yuv411", L"Planar Y, U, V (4:1:1)" },
+    { ColorFormat::YUV420, L"yuv420", L"Planar Y, U, V (4:2:0)" },
+    { ColorFormat::YUV422, L"yuv422", L"Planar Y, U, V (4:2:2)" },
+    { ColorFormat::Y41P,   L"y41p",   L"Composite Y, U, V (4:1:1)" },
+    { ColorFormat::BGR32,  L"bgr32",  L"Composite B->G->R" },
+    { ColorFormat::BGRA32, L"bgra32", L"Composite B->G->R->A" },
+    { ColorFormat::BGR24,  L"bgr24",  L"Composite B->G->R" },
+    { ColorFormat::BGR565, L"bgr565", L"Composite B->G->R, 5/6/5 bits" },
+    { ColorFormat::BGR555, L"bgr555", L"Composite B->G->R->A, 5 bits each" },
+    { ColorFormat::BGR444, L"bgr444", L"Composite B->G->R->A, 4 bits each" },
 };
 
 const int color_formats_len = sizeof(color_formats) / sizeof(ColorDescriptor);
 
-ColorDescriptor* getColorByName(const char* colorName)
+ColorDescriptor* getColorByName(const wchar_t* colorName)
 {
     for (int i = 0; i < color_formats_len; ++i)
-        if (0 == _stricmp(color_formats[i].name, colorName))
+        if (0 == _wcsicmp(color_formats[i].name, colorName))
             return &color_formats[i];
     return nullptr;
 }
@@ -54,7 +54,7 @@ void listColors()
 {
     wcout << L"\nCOLORS:\n-------\n";
     for (int i = 0; i < color_formats_len; ++i)
-        wcout << left << setw(20) << toWide(color_formats[i].name) << toWide(color_formats[i].description) << L"\n";
+        wcout << left << setw(20) << color_formats[i].name << color_formats[i].description << L"\n";
 }
 
 void help(primo::program_options::OptionsConfig<wchar_t>& optcfg)
@@ -111,8 +111,7 @@ std::wistringstream& operator>>(std::wistringstream& in, ColorDescriptor& color)
 {
     std::wstring wname;
     in >> wname;
-    std::string name(wname.begin(), wname.end());
-    ColorDescriptor* cd = getColorByName(name.c_str());
+    ColorDescriptor* cd = getColorByName(wname.c_str());
     if (!cd)
         throw primo::program_options::ParseFailure<wchar_t>(L"", wname, L"Parse error");
     color = *cd;

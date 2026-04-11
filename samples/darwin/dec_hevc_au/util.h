@@ -6,6 +6,7 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include "../shim/shim23.h"
 #include <fstream>
 #include <vector>
 

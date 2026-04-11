@@ -13,8 +13,8 @@ enum ErrorCodes
 struct ColorDescriptor
 {
     primo::codecs::ColorFormat::Enum Id;
-    const char* name;
-    const char* description;
+    const wchar_t* name;
+    const wchar_t* description;
 };
 
 class FrameSize

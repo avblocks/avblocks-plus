@@ -81,11 +81,10 @@ std::wistringstream& operator>>(std::wistringstream& in, YesNo& yn)
 {
     std::wstring ws;
     in >> ws;
-    std::string s(ws.begin(), ws.end());
 
-    if (0 == _stricmp(s.c_str(), "yes") || 0 == _stricmp(s.c_str(), "y"))
+    if (0 == _wcsicmp(ws.c_str(), L"yes") || 0 == _wcsicmp(ws.c_str(), L"y"))
         yn.val = true;
-    else if (0 == _stricmp(s.c_str(), "no") || 0 == _stricmp(s.c_str(), "n"))
+    else if (0 == _wcsicmp(ws.c_str(), L"no") || 0 == _wcsicmp(ws.c_str(), L"n"))
         yn.val = false;
     else
         throw std::exception();

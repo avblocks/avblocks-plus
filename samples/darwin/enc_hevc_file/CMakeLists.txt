@@ -28,7 +28,7 @@ endif()
 # macOS
 if(OS STREQUAL "darwin") 
     # common compile options
-    target_compile_options(${target} PRIVATE -std=c++23 -stdlib=libc++)
+    target_compile_options(${target} PRIVATE -std=c++20 -stdlib=libc++)
 
     # x64 compile options
     if (PLATFORM STREQUAL "x64") 
