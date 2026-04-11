@@ -6,6 +6,8 @@ AVBlocks for Modern C++
 
 AVBlocks Plus provides a modern C++ wrapper around the AVBlocks SDK, offering a fluent API for audio and video transcoding operations. It simplifies common tasks like format conversion, encoding, decoding, and stream manipulation.
 
+> NOTE: This library requires a compiler that supports the [C++ 20](https://en.cppreference.com/w/cpp/compiler_support.html#cpp20) standard.
+
 ## Key Features
 
 - **Fluent API**: Chain methods together for concise, readable code
@@ -61,7 +63,9 @@ TMediaSocket inputSocket = TMediaSocket()
 TMediaSocket outputSocket = TMediaSocket()
     .file("output.wav")
     .streamType(StreamType::WAVE)
-    .addPin(TMediaPin().audioStreamType(StreamType::LPCM));
+    .addPin(TMediaPin()
+        .streamInfo(TAudioStreamInfo()
+            .streamType(StreamType::LPCM)));
 
 // Transcode
 TTranscoder()
@@ -81,23 +85,24 @@ Encode raw video to H.264:
 // Input: raw YUV video
 TMediaSocket inputSocket = TMediaSocket()
     .file("raw_video.yuv")
+    .streamType(StreamType::UncompressedVideo)
     .addPin(TMediaPin()
-        .videoStreamType(StreamType::UncompressedVideo)
-        .videoWidth(1920)
-        .videoHeight(1080)
-        .videoFrameRate(30.0)
-        .videoColorFormat(ColorFormat::YUV420));
+        .streamInfo(TVideoStreamInfo()
+            .streamType(StreamType::UncompressedVideo)
+            .frameWidth(1920)
+            .frameHeight(1080)
+            .frameRate(30.0)
+            .colorFormat(ColorFormat::YUV420)
+            .scanType(ScanType::Progressive)));
 
 // Output: H.264 in MP4 container
 TMediaSocket outputSocket = TMediaSocket()
     .file("output.mp4")
     .streamType(StreamType::MP4)
     .addPin(TMediaPin()
-        .videoStreamType(StreamType::H264)
-        .videoWidth(1920)
-        .videoHeight(1080)
-        .videoFrameRate(30.0)
-        .videoBitrate(5000000));
+        .streamInfo(TVideoStreamInfo()
+            .streamType(StreamType::H264)
+            .bitrate(5000000)));
 
 TTranscoder()
     .allowDemoMode(true)
@@ -113,10 +118,9 @@ TTranscoder()
 AVBlocks provides presets for common output formats:
 
 ```cpp
-// Create output from preset
-TMediaSocket outputSocket = TMediaSocket()
-    .file("output.mp4")
-    .preset("ipad.mp4.h264.720p");
+// Create output from preset — construct TMediaSocket with the preset name
+TMediaSocket outputSocket = TMediaSocket(Preset::Video::iPad::H264_720p)
+    .file("output.mp4");
 
 TTranscoder()
     .allowDemoMode(true)
@@ -128,10 +132,10 @@ TTranscoder()
 ```
 
 Available presets include:
-- `ipad.mp4.h264.720p` - iPad-compatible 720p H.264
-- `iphone.mp4.h264.480p` - iPhone-compatible 480p H.264
-- `dvd.ntsc.4x3.mp2` - DVD-Video NTSC format
-- `web.mp4.h264.720p` - Web-optimized 720p H.264
+- `Preset::Video::iPad::H264_720p` - iPad-compatible 720p H.264
+- `Preset::Video::iPhone::H264_480p` - iPhone-compatible 480p H.264
+- `Preset::Video::DVD::NTSC_4x3_MP2` - DVD-Video NTSC format
+- `Preset::Video::Generic::MP4::Base_H264_AAC` - generic MP4 H.264/AAC
 - And many more (see Preset documentation)
 
 ## Media Information
@@ -139,23 +143,23 @@ Available presets include:
 Get information about a media file:
 
 ```cpp
-TMediaInfo info = TMediaInfo()
-    .addInput(TMediaSocket().file("video.mp4"))
-    .open();
+TMediaInfo info;
+info.inputs(0).file("video.mp4");
+info.open();
 
 // Access output sockets with stream information
 for (int i = 0; i < info.outputs().count(); ++i) {
-    MediaSocket* socket = info.outputs().at(i);
-    
+    auto socket = info.outputs(i);
+
     // Iterate through pins (streams)
-    for (int j = 0; j < socket->pins().count(); ++j) {
-        MediaPin* pin = socket->pins().at(j);
-        StreamInfo* streamInfo = pin->streamInfo();
-        
-        if (streamInfo->mediaType() == MediaType::Video) {
-            auto videoInfo = static_cast<VideoStreamInfo*>(streamInfo);
-            std::cout << "Video: " << videoInfo->frameWidth() 
-                      << "x" << videoInfo->frameHeight() << std::endl;
+    for (int j = 0; j < socket.pins().count(); ++j) {
+        auto pin = socket.pins(j);
+        auto streamInfo = pin.streamInfo();
+
+        if (streamInfo.mediaType() == MediaType::Video) {
+            auto videoInfo = pin.videoStreamInfo();
+            std::cout << "Video: " << videoInfo.frameWidth() 
+                      << "x" << videoInfo.frameHeight() << std::endl;
         }
     }
 }
@@ -163,20 +167,16 @@ for (int i = 0; i < info.outputs().count(); ++i) {
 
 ## Hardware Acceleration
 
-Enable hardware encoding:
+Enable hardware encoding via the `Param::HardwareEncoder` pin parameter:
 
 ```cpp
 TMediaSocket outputSocket = TMediaSocket()
     .file("output.mp4")
     .streamType(StreamType::MP4)
     .addPin(TMediaPin()
-        .videoStreamType(StreamType::H264)
-        .addParam(IntParam(Param::HardwareEncoder, 
-                          HardwareEncoder::Auto)));
-
-// Or configure globally
-TLibrary::config()->hardware()->setIntelMedia(true);
-TLibrary::config()->hardware()->setNvenc(true);
+        .streamInfo(TVideoStreamInfo()
+            .streamType(StreamType::H264))
+        .addParam(Param::HardwareEncoder, HardwareEncoder::Auto));
 ```
 
 ## Error Handling
@@ -196,11 +196,9 @@ try {
 } catch (const TAVBlocksException& ex) {
     std::cerr << "AVBlocks error: " << ex.what() << std::endl;
     // Access detailed error information
-    const auto* errorInfo = ex.errorInfo();
-    if (errorInfo) {
-        std::cerr << "Facility: " << errorInfo->facility() << std::endl;
-        std::cerr << "Code: " << errorInfo->code() << std::endl;
-    }
+    const auto errorInfo = ex.error();
+    std::cerr << "Facility: " << errorInfo.facility() << std::endl;
+    std::cerr << "Code: " << errorInfo.code() << std::endl;
 } catch (const std::exception& ex) {
     std::cerr << "Error: " << ex.what() << std::endl;
 }
@@ -212,36 +210,39 @@ For advanced scenarios, you can push/pull media samples:
 
 ```cpp
 // Create decoder transcoder - input from file, output PCM without file
-TTranscoder decoder = TTranscoder()
-    .allowDemoMode(true)
+TTranscoder decoder;
+decoder.allowDemoMode(true)
     .addInput(TMediaSocket().file("input.aac"))
     .addOutput(TMediaSocket()
         .streamType(StreamType::LPCM)
         .addPin(TMediaPin()
-            .audioStreamType(StreamType::LPCM)
-            .channels(2)
-            .sampleRate(48000)
-            .bitsPerSample(16)))
+            .streamInfo(TAudioStreamInfo()
+                .streamType(StreamType::LPCM)
+                .channels(2)
+                .sampleRate(48000)
+                .bitsPerSample(16))))
     .open();
 
 // Create WAV writer transcoder - input PCM without file, output to file
-TTranscoder wavWriter = TTranscoder()
-    .allowDemoMode(true)
+TTranscoder wavWriter;
+wavWriter.allowDemoMode(true)
     .addInput(TMediaSocket()
         .streamType(StreamType::LPCM)
         .addPin(TMediaPin()
-            .audioStreamType(StreamType::LPCM)
-            .channels(2)
-            .sampleRate(48000)
-            .bitsPerSample(16)))
+            .streamInfo(TAudioStreamInfo()
+                .streamType(StreamType::LPCM)
+                .channels(2)
+                .sampleRate(48000)
+                .bitsPerSample(16))))
     .addOutput(TMediaSocket()
         .file("output.wav")
         .streamType(StreamType::WAVE)
         .addPin(TMediaPin()
-            .audioStreamType(StreamType::LPCM)
-            .channels(2)
-            .sampleRate(48000)
-            .bitsPerSample(16)))
+            .streamInfo(TAudioStreamInfo()
+                .streamType(StreamType::LPCM)
+                .channels(2)
+                .sampleRate(48000)
+                .bitsPerSample(16))))
     .open();
 
 // Pull-push decoding loop
@@ -258,12 +259,11 @@ while (!decoderEos) {
     }
 
     // Check for end of stream
-    const auto* error = decoder.error();
-    if (error->facility() == primo::error::ErrorFacility::Codec &&
-        error->code() == CodecError::EOS) {
-        // Push null sample to signal EOS to WAV writer
-        TMediaSample nullSample;
-        wavWriter.push(0, nullSample);
+    const auto error = decoder.error();
+    if (error.facility() == primo::error::ErrorFacility::Codec &&
+        error.code() == CodecError::EOS) {
+        // Signal EOS to WAV writer
+        wavWriter.pushEos(0);
         decoderEos = true;
     }
 }
@@ -293,14 +293,12 @@ wavWriter.close();
 
 ### Parameters
 
-Configure encoding/decoding behavior:
+Configure encoding/decoding behavior via `TMediaPin::addParam(name, value)`:
 
 ```cpp
 TMediaPin pin = TMediaPin()
-    .addParam(IntParam(Param::Video::Bitrate, 5000000))
-    .addParam(IntParam(Param::Encoder::Video::H264::Profile, 
-                      H264Profile::High))
-    .addParam(IntParam(Param::Encoder::Video::H264::Level, 41));
+    .addParam(Param::Encoder::Video::H264::Profile, H264Profile::High)
+    .addParam(Param::Encoder::Video::H264::Level, 41);
 ```
 
 ## Platform-Specific Notes
