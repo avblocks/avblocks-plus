@@ -45,10 +45,10 @@ add_subdirectory(${OS}/mux_mp4_file)
 add_subdirectory(${OS}/mux_webm_file)
 add_subdirectory(${OS}/re-encode)
 add_subdirectory(${OS}/slideshow)
+add_subdirectory(${OS}/info_metadata_file)
+add_subdirectory(${OS}/info_stream_file)
 
 if(OS STREQUAL "darwin")
-    add_subdirectory(${OS}/info_metadata_file)
-    add_subdirectory(${OS}/info_stream_file)
 endif()
 
 if(OS STREQUAL "linux")

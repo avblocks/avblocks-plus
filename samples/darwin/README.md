@@ -14,8 +14,6 @@ Extract the audio / video stream information from a media file.
 
 See [info_stream_file](./info_stream_file) for details.
 
----
-
 ## Decoding
 
 ### AAC 
@@ -311,3 +309,4 @@ See [dump_avc_au](./dump_avc_au) for details.
 Split an H.265 (HEVC) elementary stream into access units (AU). Each access unit is saved as a separate file. The sample also displays the NAL units within each access unit.
 
 See [dump_hevc_au](./dump_hevc_au) for details.
+

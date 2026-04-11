@@ -1134,6 +1134,9 @@ struct string_traits<char> {
     static primo::ustring to_ustring(const string_type& s) {
         return primo::ustring(s);
     }
+    static string_type from_ustring(const primo::ustring& u) {
+        return u.str();
+    }
 };
 
 template<>
@@ -1141,6 +1144,9 @@ struct string_traits<wchar_t> {
     using string_type = std::wstring;
     static primo::ustring to_ustring(const string_type& s) {
         return primo::ustring(s);
+    }
+    static string_type from_ustring(const primo::ustring& u) {
+        return u.wstr();
     }
 };
 
@@ -1207,10 +1213,10 @@ public:
         return *this;
     }
 
-    /// Returns the file path as a UTF-8 @c std::string, or empty string if not set.
-    std::string file() const {
+    /// Returns the file path as a @c string_type (UTF-8 @c std::string for @c char, @c std::wstring for @c wchar_t), or empty string if not set.
+    string_type file() const {
         const char_t* f = socket_ ? socket_->file() : nullptr;
-        return f ? std::string(primo::ustring(f)) : std::string{};
+        return f ? string_traits<CharT>::from_ustring(primo::ustring(f)) : string_type{};
     }
 
     TMediaSocketT&& streamType(primo::codecs::StreamType::Enum type) && {

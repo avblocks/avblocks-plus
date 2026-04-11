@@ -1,5 +1,19 @@
 # Samples - C++ / Windows
 
+## Media Info
+
+#### info_metadata_file
+
+Extract metadata information (text attributes and embedded pictures) from a media file.
+
+See [info_metadata_file](./info_metadata_file) for details.
+
+#### info_stream_file
+
+Extract the audio / video stream information from a media file.
+
+See [info_stream_file](./info_stream_file) for details.
+
 ## Decoding
 
 ### AAC 
