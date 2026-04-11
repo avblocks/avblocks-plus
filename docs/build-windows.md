@@ -21,13 +21,13 @@ Make sure you have done the [setup for Windows](./setup-windows.md)
 #### Build
 
 ```powershell
-.\scripts\build.ps1 --type release
+.\scripts\build.ps1 --type debug
 ```
 
 #### Clean
 
 ```powershell
-.\scripts\clean.ps1 --type release
+.\scripts\clean.ps1 --type debug
 ```
 
 #### Edit
@@ -87,7 +87,7 @@ Open the project in Visual Studio:
 
 ```powershell
 pushd ./vs2022 
-start .\primo-avblocks-cpp.sln
+start .\avblocks-plus.sln
 popd
 ```
 

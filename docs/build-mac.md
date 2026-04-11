@@ -27,14 +27,14 @@ source ./configure.sh
 #### Build
 
 ```bash
-./scripts/build.sh --type release
+./scripts/build.sh --type debug
 ```
 
 #### Clean
 
 ```bash
-./scripts/clean.sh --type release
-```
+./scripts/clean.sh --type debug
+```    
 
 #### Edit
 
@@ -59,7 +59,7 @@ Open the project in Xcode:
 
 ```bash
 pushd ./xcode 
-open primo-avblocks-cpp.xcodeproj
+open avblocks-plus.xcodeproj
 popd
 ```
 
