@@ -1,4 +1,4 @@
-# avblocks-plus (beta)
+# avblocks-plus
 
 AVBlocks for Modern C++
 
