@@ -49,6 +49,8 @@ add_subdirectory(${OS}/info_metadata_file)
 add_subdirectory(${OS}/info_stream_file)
 
 if(OS STREQUAL "darwin")
+    add_subdirectory(${OS}/audio_upsample)
+    add_subdirectory(${OS}/video_crop)
 endif()
 
 if(OS STREQUAL "linux")
