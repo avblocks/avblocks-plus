@@ -38,3 +38,27 @@ source ./configure.sh
 code .
 ```
 
+## Build with CMake Presets
+
+> CMake Presets require CMake 3.19 or later.
+
+Available presets: `debug-x64`, `release-x64`, `debug-demo-x64`, `release-demo-x64`
+
+#### Configure
+
+```bash
+cmake --preset debug-x64
+```
+
+#### Build
+
+```bash
+cmake --build --preset debug-x64
+```
+
+#### Clean
+
+```bash
+cmake --build --preset debug-x64 --target clean
+```
+

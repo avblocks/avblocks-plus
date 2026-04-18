@@ -1,0 +1,74 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 19,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "debug-x64",
+      "displayName": "Debug x64",
+      "binaryDir": "${sourceDir}/build/debug_x64",
+      "generator": "Ninja",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "PLATFORM": "x64"
+      }
+    },
+    {
+      "name": "release-x64",
+      "displayName": "Release x64",
+      "binaryDir": "${sourceDir}/build/release_x64",
+      "generator": "Ninja",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "PLATFORM": "x64"
+      }
+    },
+    {
+      "name": "debug-demo-x64",
+      "displayName": "Debug Demo x64",
+      "binaryDir": "${sourceDir}/build/debug_demo_x64",
+      "generator": "Ninja",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "PLATFORM": "x64",
+        "DEMO": "YES"
+      }
+    },
+    {
+      "name": "release-demo-x64",
+      "displayName": "Release Demo x64",
+      "binaryDir": "${sourceDir}/build/release_demo_x64",
+      "generator": "Ninja",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "PLATFORM": "x64",
+        "DEMO": "YES"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "debug-x64",
+      "displayName": "Debug x64",
+      "configurePreset": "debug-x64"
+    },
+    {
+      "name": "release-x64",
+      "displayName": "Release x64",
+      "configurePreset": "release-x64"
+    },
+    {
+      "name": "debug-demo-x64",
+      "displayName": "Debug Demo x64",
+      "configurePreset": "debug-demo-x64"
+    },
+    {
+      "name": "release-demo-x64",
+      "displayName": "Release Demo x64",
+      "configurePreset": "release-demo-x64"
+    }
+  ]
+}

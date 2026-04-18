@@ -38,6 +38,30 @@ Make sure you have done the [setup for Windows](./setup-windows.md)
 code .
 ```
 
+## Build with CMake Presets
+
+> CMake Presets require CMake 3.19 or later.
+
+Available presets: `debug-x64`, `release-x64`, `debug-demo-x64`, `release-demo-x64`
+
+#### Configure
+
+```powershell
+cmake --preset debug-x64
+```
+
+#### Build
+
+```powershell
+cmake --build --preset debug-x64
+```
+
+#### Clean
+
+```powershell
+cmake --build --preset debug-x64 --target clean
+```
+
 ## Build with Visual Studio
 
 ### Generate Visual Studio 2017 project
