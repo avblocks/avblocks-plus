@@ -363,6 +363,24 @@ Crop a video by removing pixels from the edges (left, right, top, bottom).
 
 See [video_crop](./video_crop) for details.
 
+### video_framerate
+
+Change the frame rate of a video.
+
+See [video_framerate](./video_framerate) for details.
+
+### video_pad
+
+Add border padding around a video.
+
+See [video_pad](./video_pad) for details.
+
+### video_upscale
+
+Upscale a video to Full HD (1920x1080) using bicubic interpolation.
+
+See [video_upscale](./video_upscale) for details.
+
 ---
 
 ## Misc
