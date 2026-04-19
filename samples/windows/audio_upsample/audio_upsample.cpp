@@ -1,6 +1,6 @@
-#include <primo/avblocks/avb++.h>
+#include "stdafx.h"
 
-#include <string>
+#include <primo/avblocks/avb++.h>
 
 #include "options.h"
 #include "util.h"
@@ -12,14 +12,14 @@ bool upsample(const Options& opt)
 {
     deleteFile(opt.outputFile.c_str());
     try {
-        TTranscoder()
+        TTranscoderW()
             .allowDemoMode(true)
             .addInput(
-                TMediaSocket()
+                TMediaSocketW()
                     .file(opt.inputFile)
             )
             .addOutput(
-                TMediaSocket()
+                TMediaSocketW()
                     .file(opt.outputFile)
                     .streamType(StreamType::MPEG_Audio)
                     .streamSubType(StreamSubType::MPEG_Audio_Layer3)
@@ -36,19 +36,19 @@ bool upsample(const Options& opt)
             .run()
             .close();
 
-        std::println("Output: {}", opt.outputFile);
+        std::wcout << L"Output: " << opt.outputFile << std::endl;
         return true;
 
     } catch (const TAVBlocksException& ex) {
-        std::println(stderr, "AVBlocks error: {}", ex.what());
+        std::wcerr << L"AVBlocks error: " << ex.what() << std::endl;
         return false;
     } catch (const std::exception& ex) {
-        std::println(stderr, "Error: {}", ex.what());
+        std::wcerr << L"Error: " << ex.what() << std::endl;
         return false;
     }
 }
 
-int main(int argc, char* argv[])
+int wmain(int argc, wchar_t* argv[])
 {
     Options opt;
     switch(prepareOptions(opt, argc, argv))

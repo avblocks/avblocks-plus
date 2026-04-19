@@ -107,7 +107,7 @@ void savePictures(TMetadata& meta, const string& inputFile)
 
     for (int i = 0; i < piclist.count(); ++i)
     {
-        char num[8];
+        char num[12];
         snprintf(num, sizeof(num), "%d", i + 1);
         string picname = baseFilename + num;
         auto pic = piclist.at(i);

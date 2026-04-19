@@ -309,3 +309,43 @@ See [dump_avc_au](./dump_avc_au) for details.
 Split an H.265 (HEVC) elementary stream into access units (AU). Each access unit is saved as a separate file. The sample also displays the NAL units within each access unit.
 
 See [dump_hevc_au](./dump_hevc_au) for details.
+
+---
+
+## Audio Processing
+
+### audio_upsample
+
+Upsample audio from 44.1 KHz to 48 KHz.
+
+See [audio_upsample](./audio_upsample) for details.
+
+---
+
+## Video Processing
+
+### video_crop
+
+Crop a video by removing pixels from the edges (left, right, top, bottom).
+
+See [video_crop](./video_crop) for details.
+
+### video_framerate
+
+Change the frame rate of a video.
+
+See [video_framerate](./video_framerate) for details.
+
+### video_pad
+
+Add border padding around a video.
+
+See [video_pad](./video_pad) for details.
+
+### video_upscale
+
+Upscale a video to Full HD (1920x1080) using bicubic interpolation.
+
+See [video_upscale](./video_upscale) for details.
+
+---
