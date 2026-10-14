@@ -8,7 +8,7 @@ Decode AAC file in Audio Data Transport Stream (ADTS) format using `Transcoder::
 ./dec_aac_adts_pull --input <aac file> --output <wav file>
 ```
 
-###	Examples
+### Examples (x64)
 
 List options:
 
@@ -31,3 +31,25 @@ mkdir -p ./output/dec_aac_adts_pull
   --output ./output/dec_aac_adts_pull/Hydrate-Kenny_Beltrey.wav
 ```
 
+### Examples (arm64)
+
+List options:
+
+```sh
+./bin/arm64/dec_aac_adts_pull --help
+
+dec_aac_adts_pull --input <aac file> --output <wav file>
+  -h,    --help
+  -i,    --input    input AAC file
+  -o,    --output   output WAV file
+```
+
+The following example encode input file `..\assets\aud\Hydrate-Kenny_Beltrey.adts.aac` into output file `Hydrate-Kenny_Beltrey.wav`:
+
+```sh
+mkdir -p ./output/dec_aac_adts_pull
+
+./bin/arm64/dec_aac_adts_pull \
+  --input ./assets/aud/Hydrate-Kenny_Beltrey.adts.aac \
+  --output ./output/dec_aac_adts_pull/Hydrate-Kenny_Beltrey.wav
+```

@@ -8,7 +8,7 @@ Encode raw YUV video file to VP8 video in IVF (Duck IVF) container using `Transc
 ./enc_vp8_file --frame <width>x<height> --rate <fps> --color <COLOR> --input <file.yuv> --output <file.ivf> [--colors] [--help]
  ```
 
-###	Examples
+### Examples (x64)
 
 List options:
 
@@ -31,6 +31,36 @@ Encode a raw YUV video from `./assets/vid/foreman_qcif.yuv` to a VP8 video in `.
 mkdir -p ./output/enc_vp8_file
 
 ./bin/x64/enc_vp8_file \
+  --input ./assets/vid/foreman_qcif.yuv \
+  --output ./output/enc_vp8_file/foreman_qcif.ivf \
+  --frame 176x144 \
+  --rate 30 \
+  --color yuv420
+```
+
+### Examples (arm64)
+
+List options:
+
+```sh
+./bin/arm64/enc_vp8_file --help
+enc_vp8_file --frame <width>x<height> --rate <fps> --color <COLOR> --input <file.yuv> --output <file.ivf> [--colors]
+  -h,    --help
+  -i,    --input    input YUV file
+  -o,    --output   output IVF file
+  -r,    --rate     input frame rate
+  -f,    --frame    input frame sizes <width>x<height>
+  -c,    --color    input color format. Use --colors to list all supported color
+                    formats
+         --colors   list COLOR constants
+```
+
+Encode a raw YUV video from `./assets/vid/foreman_qcif.yuv` to a VP8 video in `./output/enc_vp8_file/foreman_qcif.ivf`:
+  
+```sh
+mkdir -p ./output/enc_vp8_file
+
+./bin/arm64/enc_vp8_file \
   --input ./assets/vid/foreman_qcif.yuv \
   --output ./output/enc_vp8_file/foreman_qcif.ivf \
   --frame 176x144 \

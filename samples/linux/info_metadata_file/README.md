@@ -9,7 +9,7 @@ Extract metadata information from a media file.
 info_metadata_file --input <avfile>
 ```
 
-###	Examples
+### Examples (x64)
 
 List options:
 
@@ -25,4 +25,22 @@ Extract the metadata from the `Hydrate-Kenny_Beltrey.ogg` song:
     
 ```sh    
 ./bin/x64/info_metadata_file --input ./assets/aud/Hydrate-Kenny_Beltrey.ogg
+```   
+
+### Examples (arm64)
+
+List options:
+
+```sh
+./bin/arm64/info_metadata_file --help
+
+Usage: info_metadata_file --input <file>
+  -?,    --help
+  -i,    --input   file; if no input is specified a default input file is used.
+```
+
+Extract the metadata from the `Hydrate-Kenny_Beltrey.ogg` song:
+    
+```sh    
+./bin/arm64/info_metadata_file --input ./assets/aud/Hydrate-Kenny_Beltrey.ogg
 ```   

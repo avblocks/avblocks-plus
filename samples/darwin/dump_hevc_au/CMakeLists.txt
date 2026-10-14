@@ -35,6 +35,11 @@ if(OS STREQUAL "darwin")
         target_compile_options(${target} PRIVATE -m64 -fPIC)
     endif()
 
+    # arm64 compile options
+    if (PLATFORM STREQUAL "arm64")
+        target_compile_options(${target} PRIVATE -fPIC)
+    endif()
+
     # x86 compile options
     if (PLATFORM STREQUAL "x86") 
     target_compile_options(${target} PRIVATE -m32)

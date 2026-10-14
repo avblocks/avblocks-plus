@@ -8,7 +8,7 @@ Decode MP3 file and save output to WAV file.
 ./dec_mp3_file --input <mp3 file> --output <wav file>
 ```
 
-###	Examples
+### Examples (x64)
 
 List options:
 
@@ -31,3 +31,25 @@ mkdir -p ./output/dec_mp3_file
   --output ./output/dec_mp3_file/Hydrate-Kenny_Beltrey.wav
 ```
 
+### Examples (arm64)
+
+List options:
+
+```sh
+./bin/arm64/dec_mp3_file --help
+
+dec_mp3_file --input <mp3 file> --output <wav file>
+  -h,    --help
+  -i,    --input    input MP3 file
+  -o,    --output   output WAV file
+```
+
+The following example encode input file `..\assets\aud\Hydrate-Kenny_Beltrey.mp3` into output file `Hydrate-Kenny_Beltrey.wav`:
+
+```sh
+mkdir -p ./output/dec_mp3_file
+
+./bin/arm64/dec_mp3_file \
+  --input ./assets/aud/Hydrate-Kenny_Beltrey.mp3 \
+  --output ./output/dec_mp3_file/Hydrate-Kenny_Beltrey.wav
+```

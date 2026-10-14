@@ -2,7 +2,7 @@
   "version": 3,
   "cmakeMinimumRequired": {
     "major": 3,
-    "minor": 19,
+    "minor": 26,
     "patch": 0
   },
   "configurePresets": [
@@ -47,6 +47,48 @@
         "PLATFORM": "x64",
         "DEMO": "YES"
       }
+    },
+    {
+      "name": "debug-arm64",
+      "displayName": "Debug arm64",
+      "binaryDir": "${sourceDir}/build/debug_arm64",
+      "generator": "Ninja",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "PLATFORM": "arm64"
+      }
+    },
+    {
+      "name": "release-arm64",
+      "displayName": "Release arm64",
+      "binaryDir": "${sourceDir}/build/release_arm64",
+      "generator": "Ninja",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "PLATFORM": "arm64"
+      }
+    },
+    {
+      "name": "debug-demo-arm64",
+      "displayName": "Debug Demo arm64",
+      "binaryDir": "${sourceDir}/build/debug_demo_arm64",
+      "generator": "Ninja",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "PLATFORM": "arm64",
+        "DEMO": "YES"
+      }
+    },
+    {
+      "name": "release-demo-arm64",
+      "displayName": "Release Demo arm64",
+      "binaryDir": "${sourceDir}/build/release_demo_arm64",
+      "generator": "Ninja",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "PLATFORM": "arm64",
+        "DEMO": "YES"
+      }
     }
   ],
   "buildPresets": [
@@ -69,6 +111,26 @@
       "name": "release-demo-x64",
       "displayName": "Release Demo x64",
       "configurePreset": "release-demo-x64"
+    },
+    {
+      "name": "debug-arm64",
+      "displayName": "Debug arm64",
+      "configurePreset": "debug-arm64"
+    },
+    {
+      "name": "release-arm64",
+      "displayName": "Release arm64",
+      "configurePreset": "release-arm64"
+    },
+    {
+      "name": "debug-demo-arm64",
+      "displayName": "Debug Demo arm64",
+      "configurePreset": "debug-demo-arm64"
+    },
+    {
+      "name": "release-demo-arm64",
+      "displayName": "Release Demo arm64",
+      "configurePreset": "release-demo-arm64"
     }
   ]
 }

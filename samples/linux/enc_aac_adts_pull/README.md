@@ -8,7 +8,7 @@ Encode WAV file to AAC file in Audio Data Transport Stream (ADTS) format using T
 enc_aac_adts_pull --input <wav file> --output <aac file>
 ```
 
-###	Examples
+### Examples (x64)
 
 List options:
 
@@ -26,6 +26,28 @@ Encode the input file `./assets/aud/equinox-48KHz.wav` into output file `./outpu
 mkdir -p ./output/enc_aac_adts_pull
 
 ./bin/x64/enc_aac_adts_pull \
+    --input ./assets/aud/equinox-48KHz.wav \
+    --output ./output/enc_aac_adts_pull/equinox-48KHz.adts.aac
+```
+
+### Examples (arm64)
+
+List options:
+
+```sh
+./bin/arm64/enc_aac_adts_pull --help
+Usage: enc_aac_adts_pull --input <wav file> --output <aac file>
+  -h,    --help
+  -i,    --input    input WAV file
+  -o,    --output   output AAC file
+```
+
+Encode the input file `./assets/aud/equinox-48KHz.wav` into output file `./output/enc_aac_adts_pull/equinox-48KHz.adts.aac`:
+
+```sh
+mkdir -p ./output/enc_aac_adts_pull
+
+./bin/arm64/enc_aac_adts_pull \
     --input ./assets/aud/equinox-48KHz.wav \
     --output ./output/enc_aac_adts_pull/equinox-48KHz.adts.aac
 ```

@@ -14,7 +14,7 @@ or short form:
 ./dump_hevc_au -i <h265-file> -o <folder>
 ```
 
-### Examples
+### Examples (x64)
 
 List options:
 
@@ -31,6 +31,27 @@ The following command extracts the H.265 access units from the `foreman_qcif.h26
 mkdir -Force -Path ./output/dump_hevc_au
 
 ./bin/x64/dump_hevc_au `
+  --input ./assets/vid/foreman_qcif.h265 `
+  --output ./output/dump_hevc_au
+```
+
+### Examples (arm64)
+
+List options:
+
+```powershell
+./bin/arm64/dump_hevc_au --help
+Usage: dump_hevc_au --input <h265-file> --output <folder>
+  -h,    --help
+  -i,    --input    input file (HEVC/H.265)
+  -o,    --output   output directory
+```
+
+The following command extracts the H.265 access units from the `foreman_qcif.h265` video and writes them to the folder `output/dump_hevc_au` as separate files (`au_####.h265`):
+```powershell
+mkdir -Force -Path ./output/dump_hevc_au
+
+./bin/arm64/dump_hevc_au `
   --input ./assets/vid/foreman_qcif.h265 `
   --output ./output/dump_hevc_au
 ```

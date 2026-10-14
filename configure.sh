@@ -9,3 +9,9 @@ mkdir -p $script_dir/build/release_x64
 
 mkdir -p $script_dir/build/debug_demo_x64
 mkdir -p $script_dir/build/release_demo_x64
+
+mkdir -p $script_dir/build/debug_arm64
+mkdir -p $script_dir/build/release_arm64
+
+mkdir -p $script_dir/build/debug_demo_arm64
+mkdir -p $script_dir/build/release_demo_arm64

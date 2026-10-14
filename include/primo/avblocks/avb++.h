@@ -6,6 +6,8 @@
 #include <primo/platform/ustring.h>
 
 #include <string>
+#include <concepts>
+#include <type_traits>
 #include <memory>
 #include <functional>
 #include <optional>
@@ -666,7 +668,9 @@ public:
  *
  * Holds the @c primo::ref<RawT> and exposes all properties defined on the
  * raw @c primo::codecs::StreamInfo interface, with fluent setters that return
- * @c Derived& so chaining works naturally on the concrete subclass.
+ * @c Derived& (on lvalues) or @c Derived&& (on temporaries) so chaining works naturally
+ * on the concrete subclass. The rvalue overloads let a chained temporary be returned or
+ * moved, e.g. @c return @c TVideoStreamInfo().frameWidth(352).frameHeight(288);
  */
 template<typename Derived, typename RawT>
 class TStreamInfo {
@@ -692,44 +696,84 @@ private:
 public:
     // -- Fluent setters --
 
-    Derived& streamType(primo::codecs::StreamType::Enum type) {
+    Derived& streamType(primo::codecs::StreamType::Enum type) & {
         info_->setStreamType(type);
         return self();
     }
 
-    Derived& streamSubType(primo::codecs::StreamSubType::Enum subType) {
+    Derived&& streamType(primo::codecs::StreamType::Enum type) && {
+        info_->setStreamType(type);
+        return std::move(self());
+    }
+
+    Derived& streamSubType(primo::codecs::StreamSubType::Enum subType) & {
         info_->setStreamSubType(subType);
         return self();
     }
 
-    Derived& duration(double d) {
+    Derived&& streamSubType(primo::codecs::StreamSubType::Enum subType) && {
+        info_->setStreamSubType(subType);
+        return std::move(self());
+    }
+
+    Derived& duration(double d) & {
         info_->setDuration(d);
         return self();
     }
 
-    Derived& bitrate(int32_t bps) {
+    Derived&& duration(double d) && {
+        info_->setDuration(d);
+        return std::move(self());
+    }
+
+    Derived& bitrate(int32_t bps) & {
         info_->setBitrate(bps);
         return self();
     }
 
-    Derived& bitrateMode(int32_t mode) {
+    Derived&& bitrate(int32_t bps) && {
+        info_->setBitrate(bps);
+        return std::move(self());
+    }
+
+    Derived& bitrateMode(int32_t mode) & {
         info_->setBitrateMode(mode);
         return self();
     }
 
-    Derived& ID(int32_t id) {
+    Derived&& bitrateMode(int32_t mode) && {
+        info_->setBitrateMode(mode);
+        return std::move(self());
+    }
+
+    Derived& ID(int32_t id) & {
         info_->setID(id);
         return self();
     }
 
-    Derived& programNumber(int32_t num) {
+    Derived&& ID(int32_t id) && {
+        info_->setID(id);
+        return std::move(self());
+    }
+
+    Derived& programNumber(int32_t num) & {
         info_->setProgramNumber(num);
         return self();
     }
 
-    Derived& configData(primo::codecs::MediaBuffer* buf) {
+    Derived&& programNumber(int32_t num) && {
+        info_->setProgramNumber(num);
+        return std::move(self());
+    }
+
+    Derived& configData(primo::codecs::MediaBuffer* buf) & {
         info_->setConfigData(buf);
         return self();
+    }
+
+    Derived&& configData(primo::codecs::MediaBuffer* buf) && {
+        info_->setConfigData(buf);
+        return std::move(self());
     }
 
     // -- Getters --
@@ -783,34 +827,64 @@ public:
 
     // -- Fluent setters --
 
-    TAudioStreamInfo& channels(int32_t channels) {
+    TAudioStreamInfo& channels(int32_t channels) & {
         info_->setChannels(channels);
         return *this;
     }
 
-    TAudioStreamInfo& sampleRate(int32_t sampleRate) {
+    TAudioStreamInfo&& channels(int32_t channels) && {
+        info_->setChannels(channels);
+        return std::move(*this);
+    }
+
+    TAudioStreamInfo& sampleRate(int32_t sampleRate) & {
         info_->setSampleRate(sampleRate);
         return *this;
     }
 
-    TAudioStreamInfo& bitsPerSample(int32_t bits) {
+    TAudioStreamInfo&& sampleRate(int32_t sampleRate) && {
+        info_->setSampleRate(sampleRate);
+        return std::move(*this);
+    }
+
+    TAudioStreamInfo& bitsPerSample(int32_t bits) & {
         info_->setBitsPerSample(bits);
         return *this;
     }
 
-    TAudioStreamInfo& pcmFlags(int32_t flags) {
+    TAudioStreamInfo&& bitsPerSample(int32_t bits) && {
+        info_->setBitsPerSample(bits);
+        return std::move(*this);
+    }
+
+    TAudioStreamInfo& pcmFlags(int32_t flags) & {
         info_->setPcmFlags(flags);
         return *this;
     }
 
-    TAudioStreamInfo& channelLayout(int32_t layout) {
+    TAudioStreamInfo&& pcmFlags(int32_t flags) && {
+        info_->setPcmFlags(flags);
+        return std::move(*this);
+    }
+
+    TAudioStreamInfo& channelLayout(int32_t layout) & {
         info_->setChannelLayout(layout);
         return *this;
     }
 
-    TAudioStreamInfo& bytesPerFrame(int32_t bytes) {
+    TAudioStreamInfo&& channelLayout(int32_t layout) && {
+        info_->setChannelLayout(layout);
+        return std::move(*this);
+    }
+
+    TAudioStreamInfo& bytesPerFrame(int32_t bytes) & {
         info_->setBytesPerFrame(bytes);
         return *this;
+    }
+
+    TAudioStreamInfo&& bytesPerFrame(int32_t bytes) && {
+        info_->setBytesPerFrame(bytes);
+        return std::move(*this);
     }
 
     // -- Getters --
@@ -859,49 +933,94 @@ public:
 
     // -- Fluent setters --
 
-    TVideoStreamInfo& colorFormat(primo::codecs::ColorFormat::Enum format) {
+    TVideoStreamInfo& colorFormat(primo::codecs::ColorFormat::Enum format) & {
         info_->setColorFormat(format);
         return *this;
     }
 
-    TVideoStreamInfo& frameWidth(int32_t width) {
+    TVideoStreamInfo&& colorFormat(primo::codecs::ColorFormat::Enum format) && {
+        info_->setColorFormat(format);
+        return std::move(*this);
+    }
+
+    TVideoStreamInfo& frameWidth(int32_t width) & {
         info_->setFrameWidth(width);
         return *this;
     }
 
-    TVideoStreamInfo& frameHeight(int32_t height) {
+    TVideoStreamInfo&& frameWidth(int32_t width) && {
+        info_->setFrameWidth(width);
+        return std::move(*this);
+    }
+
+    TVideoStreamInfo& frameHeight(int32_t height) & {
         info_->setFrameHeight(height);
         return *this;
     }
 
-    TVideoStreamInfo& displayRatioWidth(int32_t width) {
+    TVideoStreamInfo&& frameHeight(int32_t height) && {
+        info_->setFrameHeight(height);
+        return std::move(*this);
+    }
+
+    TVideoStreamInfo& displayRatioWidth(int32_t width) & {
         info_->setDisplayRatioWidth(width);
         return *this;
     }
 
-    TVideoStreamInfo& displayRatioHeight(int32_t height) {
+    TVideoStreamInfo&& displayRatioWidth(int32_t width) && {
+        info_->setDisplayRatioWidth(width);
+        return std::move(*this);
+    }
+
+    TVideoStreamInfo& displayRatioHeight(int32_t height) & {
         info_->setDisplayRatioHeight(height);
         return *this;
     }
 
-    TVideoStreamInfo& frameRate(double fps) {
+    TVideoStreamInfo&& displayRatioHeight(int32_t height) && {
+        info_->setDisplayRatioHeight(height);
+        return std::move(*this);
+    }
+
+    TVideoStreamInfo& frameRate(double fps) & {
         info_->setFrameRate(fps);
         return *this;
     }
 
-    TVideoStreamInfo& scanType(primo::codecs::ScanType::Enum scan) {
+    TVideoStreamInfo&& frameRate(double fps) && {
+        info_->setFrameRate(fps);
+        return std::move(*this);
+    }
+
+    TVideoStreamInfo& scanType(primo::codecs::ScanType::Enum scan) & {
         info_->setScanType(scan);
         return *this;
     }
 
-    TVideoStreamInfo& stride(int32_t stride) {
+    TVideoStreamInfo&& scanType(primo::codecs::ScanType::Enum scan) && {
+        info_->setScanType(scan);
+        return std::move(*this);
+    }
+
+    TVideoStreamInfo& stride(int32_t stride) & {
         info_->setStride(stride);
         return *this;
     }
 
-    TVideoStreamInfo& frameBottomUp(bool bottomUp) {
+    TVideoStreamInfo&& stride(int32_t stride) && {
+        info_->setStride(stride);
+        return std::move(*this);
+    }
+
+    TVideoStreamInfo& frameBottomUp(bool bottomUp) & {
         info_->setFrameBottomUp(bottomUp ? TRUE : FALSE);
         return *this;
+    }
+
+    TVideoStreamInfo&& frameBottomUp(bool bottomUp) && {
+        info_->setFrameBottomUp(bottomUp ? TRUE : FALSE);
+        return std::move(*this);
     }
 
     // -- Getters --
@@ -973,7 +1092,95 @@ public:
     }
 };
 
-class TMediaPin {
+/**
+ * CRTP mixin that adds the typed, fluent @c addParam() to a class that owns a @c primo::avblocks::ParameterList
+ * (@c TMediaPin and @c TMediaSocketT). @p Derived must provide a private @c paramList() and declare this mixin a friend.
+ *
+ * Adds a codec parameter (fluent). @p name is a parameter name constant, e.g. @c Param::Video::Crop::Left or
+ * @c Param::Encoder::Audio::AAC::StereoMode. The overload is chosen by the type of @p value:
+ * - integer or enum (e.g. @c InterpolationMethod::Super)      -> integer parameter
+ * - @c float / @c double                                       -> floating point parameter
+ * - @c std::string / @c std::wstring / string literal          -> string parameter
+ * - @c TMediaBuffer                                            -> media buffer parameter
+ * - @c TVideoStreamInfo                                        -> video stream info parameter
+ *
+ * Each overload has an lvalue version (returns @c Derived&) and an rvalue version (returns @c Derived&&) so it can be
+ * used in the middle of a chain on a temporary.
+ */
+template<typename Derived>
+class TParamsMixin {
+    primo::avblocks::ParameterList* params_() { return static_cast<Derived&>(*this).paramList(); }
+    Derived& self_() { return static_cast<Derived&>(*this); }
+
+public:
+    template<typename T> requires (std::integral<T> || std::is_enum_v<T>)
+    Derived& addParam(const char* name, T value) & {
+        params_()->addInt(name, static_cast<int64_t>(value));
+        return self_();
+    }
+
+    template<typename T> requires (std::integral<T> || std::is_enum_v<T>)
+    Derived&& addParam(const char* name, T value) && {
+        params_()->addInt(name, static_cast<int64_t>(value));
+        return std::move(self_());
+    }
+
+    template<std::floating_point T>
+    Derived& addParam(const char* name, T value) & {
+        params_()->addFloat(name, static_cast<double>(value));
+        return self_();
+    }
+
+    template<std::floating_point T>
+    Derived&& addParam(const char* name, T value) && {
+        params_()->addFloat(name, static_cast<double>(value));
+        return std::move(self_());
+    }
+
+    Derived& addParam(const char* name, const std::string& value) & {
+        params_()->addString(name, primo::ustring(value));
+        return self_();
+    }
+
+    Derived&& addParam(const char* name, const std::string& value) && {
+        params_()->addString(name, primo::ustring(value));
+        return std::move(self_());
+    }
+
+    Derived& addParam(const char* name, const std::wstring& value) & {
+        params_()->addString(name, primo::ustring(value));
+        return self_();
+    }
+
+    Derived&& addParam(const char* name, const std::wstring& value) && {
+        params_()->addString(name, primo::ustring(value));
+        return std::move(self_());
+    }
+
+    Derived& addParam(const char* name, const TMediaBuffer& value) & {
+        params_()->addMediaBuffer(name, value.get());
+        return self_();
+    }
+
+    Derived&& addParam(const char* name, const TMediaBuffer& value) && {
+        params_()->addMediaBuffer(name, value.get());
+        return std::move(self_());
+    }
+
+    Derived& addParam(const char* name, const TVideoStreamInfo& value) & {
+        params_()->addVideoStreamInfo(name, value.get());
+        return self_();
+    }
+
+    Derived&& addParam(const char* name, const TVideoStreamInfo& value) && {
+        params_()->addVideoStreamInfo(name, value.get());
+        return std::move(self_());
+    }
+};
+
+class TMediaPin : public TParamsMixin<TMediaPin> {
+    friend class TParamsMixin<TMediaPin>;
+
     primo::ref<primo::avblocks::MediaPin> pin_;
     
 public:
@@ -1053,19 +1260,10 @@ public:
         return pin_->connection();
     }
 
-    /// Adds an integer parameter to the pin's @c ParameterList (fluent).
-    /// @p name is a codec parameter name constant, e.g. @c Param::Encoder::Audio::AAC::StereoMode.
-    TMediaPin& addParam(const char* name, int64_t value) & {
-        pin_->params()->addInt(name, value);
-        return *this;
-    }
-
-    TMediaPin&& addParam(const char* name, int64_t value) && {
-        pin_->params()->addInt(name, value);
-        return std::move(*this);
-    }
-
     primo::avblocks::MediaPin* get() const { return pin_.get(); }
+
+private:
+    primo::avblocks::ParameterList* paramList() { return pin_->params(); }
 };
 
 /**
@@ -1151,7 +1349,8 @@ struct string_traits<wchar_t> {
 };
 
 template<typename CharT = char>
-class TMediaSocketT {
+class TMediaSocketT : public TParamsMixin<TMediaSocketT<CharT>> {
+    friend class TParamsMixin<TMediaSocketT<CharT>>;
     primo::ref<primo::avblocks::MediaSocket> socket_;
     
 public:
@@ -1275,6 +1474,89 @@ public:
         return *this;
     }
 
+    /// Gives you a reference to the pin at @p index, so you can do something with it (read it or change it)
+    /// without leaving a fluent chain.
+    ///
+    /// @p fn is called once, immediately, with a @c TMediaPin& that refers to the pin inside this socket (it is not a
+    /// copy), so changes made through it apply to the socket. The socket itself is returned, so chaining continues.
+    ///
+    /// Use this instead of @c pins(index): that returns the pin and ends the chain, so the socket is no longer
+    /// available to pass on, e.g. to @c TTranscoder::addOutput().
+    /// @code
+    /// TTranscoder()
+    ///     .addInput(TMediaSocket(mediaInfo))
+    ///     .addOutput(
+    ///         TMediaSocket(mediaInfo)
+    ///             .file("out.mp4")
+    ///             .pinRef(0, [](TMediaPin& pin) {
+    ///                 pin.videoStreamInfo().frameRate(30.0);
+    ///             }))
+    ///     .open().run().close();
+    /// @endcode
+    /// @param index Zero-based index of the pin.
+    /// @param fn    Callable taking @c TMediaPin&.
+    template<typename Fn>
+    TMediaSocketT&& pinRef(int32_t index, Fn&& fn) && {
+        TMediaPin pin = pins(index);
+        std::forward<Fn>(fn)(pin);
+        return std::move(*this);
+    }
+
+    /// @overload Lvalue version: returns @c *this.
+    template<typename Fn>
+    TMediaSocketT& pinRef(int32_t index, Fn&& fn) & {
+        TMediaPin pin = pins(index);
+        std::forward<Fn>(fn)(pin);
+        return *this;
+    }
+
+    /// Gives you a reference to the video stream info of the pin at @p index, so you can do something with it
+    /// (read it or change it) without leaving a fluent chain. Shorter than @c pinRef() when only the stream info
+    /// is needed.
+    ///
+    /// @p fn is called once, immediately, with a @c TVideoStreamInfo& that refers to the stream info inside the pin
+    /// (it is not a copy), so changes made through it apply to the socket. The socket is returned, so chaining
+    /// continues. The pin must be a video pin.
+    /// @code
+    /// TMediaSocket(mediaInfo).file("out.mp4")
+    ///     .videoInfoRef(0, [](TVideoStreamInfo& video) { video.frameRate(30.0); })
+    /// @endcode
+    template<typename Fn>
+    TMediaSocketT&& videoInfoRef(int32_t index, Fn&& fn) && {
+        TVideoStreamInfo info = pins(index).videoStreamInfo();
+        std::forward<Fn>(fn)(info);
+        return std::move(*this);
+    }
+
+    /// @overload Lvalue version: returns @c *this.
+    template<typename Fn>
+    TMediaSocketT& videoInfoRef(int32_t index, Fn&& fn) & {
+        TVideoStreamInfo info = pins(index).videoStreamInfo();
+        std::forward<Fn>(fn)(info);
+        return *this;
+    }
+
+    /// Gives you a reference to the audio stream info of the pin at @p index, so you can do something with it
+    /// (read it or change it) without leaving a fluent chain. Same as @c videoInfoRef() for an audio pin.
+    /// @code
+    /// TMediaSocket(mediaInfo).file("out.mp3")
+    ///     .audioInfoRef(0, [](TAudioStreamInfo& audio) { audio.sampleRate(48000); })
+    /// @endcode
+    template<typename Fn>
+    TMediaSocketT&& audioInfoRef(int32_t index, Fn&& fn) && {
+        TAudioStreamInfo info = pins(index).audioStreamInfo();
+        std::forward<Fn>(fn)(info);
+        return std::move(*this);
+    }
+
+    /// @overload Lvalue version: returns @c *this.
+    template<typename Fn>
+    TMediaSocketT& audioInfoRef(int32_t index, Fn&& fn) & {
+        TAudioStreamInfo info = pins(index).audioStreamInfo();
+        std::forward<Fn>(fn)(info);
+        return *this;
+    }
+
     /// @}
 
     /// Returns the stream type of this socket (read from the underlying @c MediaSocket).
@@ -1299,7 +1581,16 @@ public:
     /// The returned object is invalid (@c valid() == false) if the socket has no metadata.
     TMetadata metadata() const { return TMetadata(socket_->metadata()); }
 
+    /// Creates an independent deep copy of this socket (file, stream types and pins). Typical use is to start the
+    /// output from the input: @c input.clone().file("out.mp4").
+    TMediaSocketT clone() const {
+        return TMediaSocketT(primo::ref<primo::avblocks::MediaSocket>(socket_->clone()));
+    }
+
     primo::avblocks::MediaSocket* get() const { return socket_.get(); }
+
+private:
+    primo::avblocks::ParameterList* paramList() { return socket_->params(); }
 };
 
 // Type aliases for convenience
@@ -1378,12 +1669,34 @@ public:
     TMediaInfoT(TMediaInfoT&&) = default;
     TMediaInfoT& operator=(TMediaInfoT&&) = default;
 
+    using string_type = typename string_traits<CharT>::string_type;
+
+    /// Sets the file of the first input socket (fluent), so a probe can be written as
+    /// @c TMediaInfo().file("in.mp4").open().
+    TMediaInfoT&& file(const string_type& path) && {
+        inputs(0).file(path);
+        return std::move(*this);
+    }
+
+    /// @overload
+    TMediaInfoT& file(const string_type& path) & {
+        inputs(0).file(path);
+        return *this;
+    }
+
     /// Opens the MediaInfo, throwing @c TAVBlocksException on failure.
-    TMediaInfoT& open() {
+    TMediaInfoT& open() & {
         if (!info_->open()) {
             throw TAVBlocksException("Failed to open MediaInfo", TErrorInfo(info_->error()));
         }
         return *this;
+    }
+
+    /// Opens the MediaInfo on a temporary, so @c auto @c info @c = @c TMediaInfo().file(f).open();
+    /// moves the opened object into @c info. Throws @c TAVBlocksException on failure.
+    TMediaInfoT&& open() && {
+        open();
+        return std::move(*this);
     }
 
     /// Opens the MediaInfo. Returns @c true on success, @c false on failure.
@@ -1496,56 +1809,110 @@ public:
         return *callback_;
     }
 
-    TTranscoderT& allowDemoMode(bool allow = true) {
+    TTranscoderT& allowDemoMode(bool allow = true) & {
         transcoder_->setAllowDemoMode(allow ? TRUE : FALSE);
         return *this;
     }
 
+    /// @overload Rvalue version, so a chain on a temporary can be returned or moved.
+    TTranscoderT&& allowDemoMode(bool allow = true) && {
+        transcoder_->setAllowDemoMode(allow ? TRUE : FALSE);
+        return std::move(*this);
+    }
+
     /// Sets a lambda invoked periodically during @c run() with @c (currentTime, totalTime).
-    TTranscoderT& onProgress(std::function<void(double, double)> f) {
+    TTranscoderT& onProgress(std::function<void(double, double)> f) & {
         ensureCallback().setOnProgress(std::move(f));
         return *this;
     }
 
+    /// @overload Rvalue version, so a chain on a temporary can be returned or moved.
+    TTranscoderT&& onProgress(std::function<void(double, double)> f) && {
+        ensureCallback().setOnProgress(std::move(f));
+        return std::move(*this);
+    }
+
     /// Sets a lambda invoked on completion status during @c run().
-    TTranscoderT& onStatus(std::function<void(primo::avblocks::TranscoderStatus::Enum)> f) {
+    TTranscoderT& onStatus(std::function<void(primo::avblocks::TranscoderStatus::Enum)> f) & {
         ensureCallback().setOnStatus(std::move(f));
         return *this;
     }
 
+    /// @overload Rvalue version, so a chain on a temporary can be returned or moved.
+    TTranscoderT&& onStatus(std::function<void(primo::avblocks::TranscoderStatus::Enum)> f) && {
+        ensureCallback().setOnStatus(std::move(f));
+        return std::move(*this);
+    }
+
     /// Sets a lambda controlling whether @c run() continues.
     /// Return @c true to continue, @c false to stop gracefully.
-    TTranscoderT& onContinue(std::function<bool(double)> f) {
+    TTranscoderT& onContinue(std::function<bool(double)> f) & {
         ensureCallback().setOnContinue(std::move(f));
         return *this;
     }
 
+    /// @overload Rvalue version, so a chain on a temporary can be returned or moved.
+    TTranscoderT&& onContinue(std::function<bool(double)> f) && {
+        ensureCallback().setOnContinue(std::move(f));
+        return std::move(*this);
+    }
+
     /// Sets a lambda invoked when an input format is detected or changed during push mode.
-    TTranscoderT& onInputChange(std::function<void(int32_t)> f) {
+    TTranscoderT& onInputChange(std::function<void(int32_t)> f) & {
         ensureCallback().setOnInputChange(std::move(f));
         return *this;
     }
+
+    /// @overload Rvalue version, so a chain on a temporary can be returned or moved.
+    TTranscoderT&& onInputChange(std::function<void(int32_t)> f) && {
+        ensureCallback().setOnInputChange(std::move(f));
+        return std::move(*this);
+    }
     
-    TTranscoderT& addInput(const TMediaSocketT<CharT>& socket) {
+    TTranscoderT& addInput(const TMediaSocketT<CharT>& socket) & {
         transcoder_->inputs()->add(socket.get());
         return *this;
     }
 
+    /// @overload Rvalue version, so a chain on a temporary can be returned or moved.
+    TTranscoderT&& addInput(const TMediaSocketT<CharT>& socket) && {
+        transcoder_->inputs()->add(socket.get());
+        return std::move(*this);
+    }
+
     /// Removes the input socket at @p index.
-    TTranscoderT& removeInput(int32_t index) {
+    TTranscoderT& removeInput(int32_t index) & {
         transcoder_->inputs()->remove(index);
         return *this;
     }
 
-    TTranscoderT& addOutput(const TMediaSocketT<CharT>& socket) {
+    /// @overload Rvalue version, so a chain on a temporary can be returned or moved.
+    TTranscoderT&& removeInput(int32_t index) && {
+        transcoder_->inputs()->remove(index);
+        return std::move(*this);
+    }
+
+    TTranscoderT& addOutput(const TMediaSocketT<CharT>& socket) & {
         transcoder_->outputs()->add(socket.get());
         return *this;
     }
 
+    /// @overload Rvalue version, so a chain on a temporary can be returned or moved.
+    TTranscoderT&& addOutput(const TMediaSocketT<CharT>& socket) && {
+        transcoder_->outputs()->add(socket.get());
+        return std::move(*this);
+    }
+
     /// Removes the output socket at @p index.
-    TTranscoderT& removeOutput(int32_t index) {
+    TTranscoderT& removeOutput(int32_t index) & {
         transcoder_->outputs()->remove(index);
         return *this;
+    }
+
+    /// @overload Rvalue version, so a chain on a temporary can be returned or moved.
+    TTranscoderT&& removeOutput(int32_t index) && {
+        transcoder_->outputs()->remove(index);
+        return std::move(*this);
     }
 
     /// Returns a non-owning view of the input socket list.
@@ -1564,11 +1931,19 @@ public:
         return TMediaSocketT<CharT>(transcoder_->outputs()->at(index));
     }
 
-    TTranscoderT& open() {
+    TTranscoderT& open() & {
         if (!transcoder_->open()) {
             throw TAVBlocksException("Failed to open transcoder", TErrorInfo(transcoder_->error()));
         }
         return *this;
+    }
+
+    /// @overload Rvalue version, so a chain on a temporary can be returned or moved.
+    TTranscoderT&& open() && {
+        if (!transcoder_->open()) {
+            throw TAVBlocksException("Failed to open transcoder", TErrorInfo(transcoder_->error()));
+        }
+        return std::move(*this);
     }
 
     /// Opens the transcoder without throwing. Returns @c true on success.
@@ -1590,15 +1965,40 @@ public:
         return transcoder_->push(inputIndex, nullptr) == TRUE;
     }
 
-    TTranscoderT& run() {
+    TTranscoderT& run() & {
         if (!transcoder_->run()) {
             throw TAVBlocksException("Failed to run transcoder", TErrorInfo(transcoder_->error()));
         }
         return *this;
     }
+
+    /// @overload Rvalue version, so a chain on a temporary can be returned or moved.
+    TTranscoderT&& run() && {
+        if (!transcoder_->run()) {
+            throw TAVBlocksException("Failed to run transcoder", TErrorInfo(transcoder_->error()));
+        }
+        return std::move(*this);
+    }
     
     void close() {
         transcoder_->close();
+    }
+
+    /// Opens, runs and closes the transcoder (file to file mode): the whole @c open().run().close() sequence in
+    /// one call. The transcoder is closed even if @c run() throws; @c TAVBlocksException is thrown if it cannot be
+    /// opened or fails to run.
+    /// @code
+    /// TTranscoder().allowDemoMode(true).addInput(in).addOutput(out).transcode();
+    /// @endcode
+    void transcode() {
+        open();
+        try {
+            run();
+        } catch (...) {
+            close();
+            throw;
+        }
+        close();
     }
 
     bool flush() {

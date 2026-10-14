@@ -8,7 +8,7 @@ Decode Opus OGG file and save output to WAV file.
 ./dec_opus_file --input <opus file> --output <wav file>
 ```
 
-###	Examples
+### Examples (x64)
 
 List options:
 
@@ -27,6 +27,29 @@ The following example decodes input file `./assets/aud/Everybody-TBB.opus` into 
 mkdir -p ./output/dec_opus_file
 
 ./bin/x64/dec_opus_file \
+  --input ./assets/aud/Everybody-TBB.opus \
+  --output ./output/dec_opus_file/Everybody-TBB.wav
+```
+
+### Examples (arm64)
+
+List options:
+
+```sh
+./bin/arm64/dec_opus_file --help
+
+dec_opus_file --input <opus file> --output <wav file>
+  -h,    --help
+  -i,    --input    input Opus file
+  -o,    --output   output WAV file
+```
+
+The following example decodes input file `./assets/aud/Everybody-TBB.opus` into output file `Everybody-TBB.wav`:
+
+```sh
+mkdir -p ./output/dec_opus_file
+
+./bin/arm64/dec_opus_file \
   --input ./assets/aud/Everybody-TBB.opus \
   --output ./output/dec_opus_file/Everybody-TBB.wav
 ```

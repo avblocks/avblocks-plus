@@ -1,5 +1,43 @@
 # Samples - C++ / macOS
 
+## Getting Started
+
+### simple_converter
+
+Transcodes an H.264/AVC video to H.265/HEVC.
+
+See [simple_converter](./simple_converter) for build and run instructions.
+
+### simple_audio_upsample
+
+Upsamples an MP3 audio clip from 44.1 KHz to 48 KHz.
+
+See [simple_audio_upsample](./simple_audio_upsample) for build and run instructions.
+
+### simple_video_crop
+
+Crops a 16:9 video to 4:3.
+
+See [simple_video_crop](./simple_video_crop) for build and run instructions.
+
+### simple_video_framerate
+
+Changes the frame rate of a video from 24 fps to 30 fps.
+
+See [simple_video_framerate](./simple_video_framerate) for build and run instructions.
+
+### simple_video_pad
+
+Fits a 16:9 video into a 4:3 frame by resizing and padding the picture.
+
+See [simple_video_pad](./simple_video_pad) for build and run instructions.
+
+### simple_video_upscale
+
+Scales a 480p video up to Full HD 1080p.
+
+See [simple_video_upscale](./simple_video_upscale) for build and run instructions.
+
 ## Media Info
 
 ### info_metadata_file
@@ -72,6 +110,12 @@ Multiplex two single-stream MP4 files containing AAC (audio) and H.264 (video) s
 
 See [mux_mp4_file](./mux_mp4_file) for details.
 
+#### mux_mp4_fs_file
+
+Multiplex AAC audio and H.264 video into an MP4 file, optionally with fast start (the `moov` atom is moved in front of `mdat` for progressive download). Can also remux an existing MP4 file into a fast-start MP4 file.
+
+See [mux_mp4_fs_file](./mux_mp4_fs_file) for details.
+
 ### WebM 
 
 > Matroska / WebM
@@ -117,6 +161,12 @@ See [dec_avc_au](./dec_avc_au) for details.
 Decode a compressed AVC / H.264 Annex B file to raw uncompressed YUV video file.       
 
 See [dec_avc_file](./dec_avc_file) for details.
+
+#### dec_avc_pull
+
+Decode a compressed AVC / H.264 Annex B file to raw uncompressed YUV video file using `Transcoder::pull`.
+
+See [dec_avc_pull](./dec_avc_pull) for details.
 
 ### HEVC / H.265
 
@@ -235,6 +285,12 @@ See [enc_avc_file](./enc_avc_file) for details.
 Encode raw YUV video file to AVC / H.264 Annex B video file using `Transcoder::pull`.  
 
 See [enc_avc_pull](./enc_avc_pull) for details.
+
+#### enc_avc_push
+
+Encode raw YUV video file to AVC / H.264 Annex B video file using `Transcoder::push`.
+
+See [enc_avc_push](./enc_avc_push) for details.
 
 ### HEVC / H.265
 

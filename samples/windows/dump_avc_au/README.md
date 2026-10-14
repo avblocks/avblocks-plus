@@ -14,7 +14,7 @@ or short form:
 ./dump_avc_au -i <h264-file> -o <folder>
 ```
 
-### Examples
+### Examples (x64)
 
 List options:
 
@@ -31,6 +31,27 @@ The following command extracts the H.264 access units from the `foreman_qcif.h26
 mkdir -Force -Path ./output/dump_avc_au
 
 ./bin/x64/dump_avc_au `
+  --input ./assets/vid/foreman_qcif.h264 `
+  --output ./output/dump_avc_au
+```
+
+### Examples (arm64)
+
+List options:
+
+```powershell
+./bin/arm64/dump_avc_au --help
+Usage: dump_avc_au --input <h264-file> --output <folder>
+  -h,    --help
+  -i,    --input    input file (AVC/H.264)
+  -o,    --output   output directory
+```
+
+The following command extracts the H.264 access units from the `foreman_qcif.h264` video and writes them to the folder `output/dump_avc_au` as separate files (`au_####.h264`):
+```powershell
+mkdir -Force -Path ./output/dump_avc_au
+
+./bin/arm64/dump_avc_au `
   --input ./assets/vid/foreman_qcif.h264 `
   --output ./output/dump_avc_au
 ```
