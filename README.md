@@ -5,7 +5,7 @@ AVBlocks for Modern C++
 # Docs
 
 - [API Docs](https://doc.avblocks.com/core/latest/) — Online API reference for the AVBlocks SDK
-- [Wiki](https://wiki.avblocks.com/) — Documentation and guides
+- [Wiki](https://wiki-plus.avblocks.com/) — Documentation and guides
 - [Blog](https://blog.avblocks.com/) — News and updates
 
 # Installation
