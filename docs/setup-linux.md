@@ -14,21 +14,27 @@ sudo apt install build-essential
 
 These libraries are required by AVBlocks:
 
+#### Ubuntu 26.04
+
+```bash
+sudo apt-get install libjpeg8 libtiff6 libpng16-16
+```
+
 #### Ubuntu 24.04 / 22.04 / 20.04
 
 ```bash
-sudo apt-get install libjpeg8 libtiff5 libpng16-16 libtbb2
+sudo apt-get install libjpeg8 libtiff5 libpng16-16
 ```
 
 #### Ubuntu 18.04 / 16.04
 
 ```bash
-sudo apt-get install libjpeg8 libtiff5 libpng12-0 libtbb2
+sudo apt-get install libjpeg8 libtiff5 libpng12-0
 ```
 
 ### CMake
 
-#### Ubuntu 24.04 / 22.04
+#### Ubuntu 26.04 / 24.04 / 22.04
 
 ```bash
 sudo apt install cmake

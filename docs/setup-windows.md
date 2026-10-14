@@ -38,11 +38,27 @@ choco config set cacheLocation C:/ChocoCache
 choco upgrade chocolatey
 ```
 
+## Visual Studio 2022
+
+This is needed for the C++ compiler. Install [Visual Studio 2022 Community Edition](https://visualstudio.microsoft.com/vs/older-downloads/).  
+
+During installation select C++ desktop development and latest Windows 10 SDK. 
+
+After installation open Visual Studio and check for updates. Install the latest 2022 version that is available. 
+
 ## CMake
 
-Install via Chocolatey. In PowerShell as Administrator:
+On Windows 11 install with `winget`. In PowerShell:
 
-```bash
+```powershell
+winget install --id Kitware.CMake -e
+```
+
+Open a new PowerShell window afterwards so that `cmake` is on the `PATH`.
+
+Alternatively, install via Chocolatey. In PowerShell as Administrator:
+
+```powershell
 choco uninstall cmake
 choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System'
 ```
@@ -55,23 +71,7 @@ Install via Chocolatey. In PowerShell as Administrator:
 choco install ninja
 ```
 
-## Visual Studio 2022
-
-This is needed for the C++ compiler. Install [Visual Studio 2022 Community Edition](https://visualstudio.microsoft.com/vs/older-downloads/).  
-
-During installation select C++ desktop development and latest Windows 10 SDK. 
-
-After installation open Visual Studio and check for updates. Install the latest 2022 version that is available. 
-
-## Visual Studio Code
-
-Download and install from [Visual Studio Code](https://code.visualstudio.com/download) site.
-
-Open Visual Studio Code and press `Ctrl + Shift + p`. Select `Shell Command: Install 'code' command in PATH`.
-
 ## Environment
-
-### PowerShell
 
 Update `$env:PSModulePath`  so that you can use PowerShell modules. 
 
@@ -100,3 +100,9 @@ Get-VSSetupInstance `
 >  This finds the installation path for Visual Studio 2022.
 
 See [Selecting an Instance](https://github.com/Microsoft/vssetup.powershell/wiki/Selecting-an-Instance)
+
+## Visual Studio Code
+
+Download and install from [Visual Studio Code](https://code.visualstudio.com/download) site.
+
+Open Visual Studio Code and press `Ctrl + Shift + p`. Select `Shell Command: Install 'code' command in PATH`.

@@ -2,6 +2,10 @@
 
 > Scripts are `bash`
 
+## Apple Silicon (arm64) and Intel (x64)
+
+Both architectures are supported. Check your machine with `uname -m`: `arm64` is Apple Silicon, `x86_64` is Intel. Download the matching AVBlocks Core build (see [Download AVBlocks Core and Assets on macOS](./download-avblocks-core-and-assets-mac.md)).
+
 ## Xcode
 
 Install Command Line Tools for Xcode:
@@ -15,7 +19,14 @@ xcode-select --install
 Install Homebrew:
 
 ```bash
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+On Apple Silicon Homebrew installs to `/opt/homebrew`. Add it to your `PATH` as the installer instructs, e.g.:
+
+```bash
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+eval "$(/opt/homebrew/bin/brew shellenv)"
 ```
 
 ## cmake, ninja

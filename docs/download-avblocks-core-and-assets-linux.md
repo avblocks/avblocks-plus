@@ -3,15 +3,18 @@
 Change to the directory where you cloned this repository:
 
 ```bash
-cd avblocks-cpp
+cd avblocks-plus
 ```
 
 ## AVBlocks Core
 
 In the script below, change the tag to the release that you need. For the available versions check the [AVBlocks Core](https://github.com/avblocks/avblocks-core/releases) releases.   
 
+Builds are available for ARM64 (`linux-arm64`) and x64 (`linux`). Use `uname -m` to check your machine: `aarch64` means ARM64, `x86_64` means x64.
+
 ```bash
 # select version and platform
+# "linux-arm64" for ARM64 (aarch64), "linux" for x64
 tag="v3.4.0-demo.1"
 platform="linux"
 

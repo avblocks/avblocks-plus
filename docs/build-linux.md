@@ -20,15 +20,28 @@ source ./configure.sh
 
 #### Build
 
+The target architecture defaults to the host (`arm64` on ARM64 / `aarch64`, `x64` on x86_64). Use `--platform` to override it.
+
 ```bash
-./scripts/build.sh --type debug
+./scripts/build.sh --type release
+
+# explicit platform
+./scripts/build.sh --type release --platform arm64
+./scripts/build.sh --type release --platform x64
 ```
+
+> The `sdk/` directory must contain the AVBlocks Core build for the same architecture. Output goes to `build/<type>_<platform>`, e.g. `build/release_arm64`.
 
 #### Clean
 
 ```bash
-./scripts/clean.sh --type debug
-```    
+./scripts/clean.sh --type release
+./scripts/clean.sh --type release --platform arm64
+```
+
+#### CMake presets
+
+Presets are also available for both architectures, e.g. `debug-arm64`, `release-arm64`, `debug-demo-arm64`, `release-demo-arm64` (and the `x64` equivalents).
 
 #### Edit
 
@@ -37,28 +50,3 @@ source ./configure.sh
 ```bash
 code .
 ```
-
-## Build with CMake Presets
-
-> CMake Presets require CMake 3.19 or later.
-
-Available presets: `debug-x64`, `release-x64`, `debug-demo-x64`, `release-demo-x64`
-
-#### Configure
-
-```bash
-cmake --preset debug-x64
-```
-
-#### Build
-
-```bash
-cmake --build --preset debug-x64
-```
-
-#### Clean
-
-```bash
-cmake --build --preset debug-x64 --target clean
-```
-

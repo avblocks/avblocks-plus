@@ -2,6 +2,145 @@
 
 AVBlocks for Modern C++
 
+# Docs
+
+- [API Docs](https://doc.avblocks.com/core/latest/) — Online API reference for the AVBlocks SDK
+- [Wiki](https://wiki.avblocks.com/) — Documentation and guides
+- [Blog](https://blog.avblocks.com/) — News and updates
+
+# Installation
+
+Download and install the AVBlocks demo version on your platform. The extracted files will be placed under the `sdk/` directory of this repository.
+
+## Linux
+
+Run [download-sdk-and-assets.sh](./download-sdk-and-assets.sh) from the repository root. It detects the host architecture (`arm64` or `x64`), downloads the matching SDK into `sdk/` and the demo assets into `assets/`:
+
+```bash
+./download-sdk-and-assets.sh
+```
+
+Alternatively, download manually:
+
+```bash
+# select version and platform
+# "linux-arm64" for ARM64 (aarch64), "linux" for x64
+tag="v3.4.0-demo.1"
+platform="linux"
+
+# download
+mkdir -p ./sdk
+cd ./sdk
+
+# sdk
+curl \
+  --location \
+  --output ./avblocks-$tag-$platform.tar.gz \
+  https://github.com/avblocks/avblocks-core/releases/download/$tag/avblocks-$tag-$platform.tar.gz
+  
+# sha256 checksum
+curl \
+  --location \
+  --output ./avblocks-$tag-$platform.tar.gz.sha256 \
+  https://github.com/avblocks/avblocks-core/releases/download/$tag/avblocks-$tag-$platform.tar.gz.sha256
+
+# verify sha256 checksum
+shasum --check ./avblocks-$tag-$platform.tar.gz.sha256
+
+# extract
+tar -xvf avblocks-$tag-$platform.tar.gz
+
+cd ..
+```
+
+## macOS
+
+Run [download-sdk-and-assets.sh](./download-sdk-and-assets.sh) from the repository root. It detects the host architecture (Apple Silicon `arm64` or Intel `x64`), downloads the matching SDK into `sdk/` and the demo assets into `assets/`:
+
+```bash
+./download-sdk-and-assets.sh
+```
+
+Alternatively, download manually:
+
+```bash
+# select version and platform
+# "darwin-arm64" for Apple Silicon (M1/M2/M3/M4), "darwin" for Intel (x64)
+tag="v3.4.0-demo.1"
+platform="darwin-arm64"
+
+# download
+mkdir -p ./sdk
+cd ./sdk
+
+# sdk
+curl \
+  --location \
+  --output ./avblocks-$tag-$platform.zip \
+  https://github.com/avblocks/avblocks-core/releases/download/$tag/avblocks-$tag-$platform.zip
+  
+# sha256 checksum
+curl \
+  --location \
+  --output ./avblocks-$tag-$platform.zip.sha256 \
+  https://github.com/avblocks/avblocks-core/releases/download/$tag/avblocks-$tag-$platform.zip.sha256
+
+# verify sha256 checksum
+shasum --check ./avblocks-$tag-$platform.zip.sha256
+
+# unzip
+unzip avblocks-$tag-$platform.zip
+
+cd ..
+```
+
+## Windows
+
+> Scripts are PowerShell
+
+Run [download-sdk-and-assets.ps1](./download-sdk-and-assets.ps1) from the repository root. It detects the host architecture (`arm64` or `x64`), downloads the matching SDK into `sdk/` and the demo assets into `assets/`:
+
+```powershell
+./download-sdk-and-assets.ps1
+```
+
+Alternatively, download manually:
+
+```powershell
+# select version and platform
+# "windows-arm64" for ARM64, "windows" for x64
+$tag='v3.4.0-demo.1'
+$platform='windows'
+
+# download
+new-item -Force -ItemType Directory ./sdk
+cd ./sdk
+
+# sdk
+curl.exe `
+  --location `
+  --output ./avblocks-$tag-$platform.zip `
+  https://github.com/avblocks/avblocks-core/releases/download/$tag/avblocks-$tag-$platform.zip
+  
+# sha256 checksum
+curl.exe `
+  --location `
+  --output ./avblocks-$tag-$platform.zip.sha256 `
+  https://github.com/avblocks/avblocks-core/releases/download/$tag/avblocks-$tag-$platform.zip.sha256
+
+# verify checksum
+$downloadedHash = (Get-FileHash -Algorithm SHA256 ./avblocks-$tag-$platform.zip).Hash.ToLower()
+$expectedHash = (Get-Content ./avblocks-$tag-$platform.zip.sha256).Split(' ')[0].ToLower()
+if ($downloadedHash -eq $expectedHash) { Write-Host "Checksum OK!"; } else { Write-Host "Checksum failed!"; }
+
+# unzip
+expand-archive -Force -Path avblocks-$tag-$platform.zip -DestinationPath .
+
+cd ..
+```
+
+For more details, see the platform-specific setup guides in [docs/](docs/).
+
 # Overview
 
 AVBlocks Plus provides a modern C++ wrapper around the AVBlocks SDK, offering a fluent API for audio and video transcoding operations. It simplifies common tasks like format conversion, encoding, decoding, and stream manipulation.
